@@ -1,0 +1,349 @@
+
+@import "constants.scss";
+@import "varapp-samples-selection.scss";
+@import "varapp-variants.scss";
+@import "varapp-filters.scss";
+@import "varapp-log.scss";
+@import "varapp-lookup.scss";
+@import "varapp-login.scss";
+@import "varapp-admin.scss";
+
+
+/*
+ - Helper classes
+ - Main structure
+ - Singletons
+ - Common elements
+*/
+
+
+/****************************************************************************
+ **************************    HELPER CLASSES      **************************
+ ****************************************************************************/
+
+
+.nomargin {
+    margin: 0;
+    padding: 0;
+}
+
+.pointme {
+    cursor: pointer;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.nolink {
+    a {
+        text-decoration: none;
+        color: black;
+    }
+}
+
+/****************************************************************************
+ **************************     MAIN STRUCTURE     **************************
+ ****************************************************************************/
+
+
+html {
+    height: 100%;
+}
+
+body {
+    background-color: white;
+    padding-top: $STANDARD_MARGIN;
+    padding-bottom: $STANDARD_MARGIN;
+    height: 100%;
+
+    .container-fluid {
+        height: 100%;
+        #app-container {
+            height: calc(100% - 50px);   /* Remove footer height */
+        }
+    }
+}
+
+/* app.js component */
+#app{
+    height: 100%;
+    /* Header.js component */
+    #header {
+        height: $LINE_HEIGHT;
+    }
+    .row {
+        height: calc(100% - 65px);  /* remove Header height */
+
+        /* SamplesSelection.js component */
+        #samples-selection {
+            height: 100%;
+            /* SamplesTable.js component */
+            #samples-table {
+                height: calc(100% - 150px - 40px);  /* remove variants summary, samples toolbar and Back button heights */
+                margin-bottom: 8px;
+            }
+        }
+
+        /* Variants.js component */
+        #variants {
+            height: calc(100% - 83px);
+            /* VariantsTable.js component */
+            #variants-table {
+                height: calc(100% - 43px);
+            }
+        }
+    }
+}
+
+
+/** Side spacing for mobile first views **/
+#header, #footer {
+    padding-left: $STANDARD_MARGIN;
+    padding-right: $STANDARD_MARGIN;
+}
+
+#header {
+    border-bottom: 1px solid #e5e5e5;
+    /** Make the masthead heading the same height as the navigation **/
+    h3 {
+        margin-top: 0;
+        margin-bottom: 0;
+        line-height: 35px;
+        padding-bottom: $STANDARD_MARGIN;
+    }
+    .dropdown.btn-group {
+        background-color: #f0f0f0;
+        border-radius: 4px;
+        #select-database.dropdown-toggle {
+            background-color: transparent;
+            border: none;
+            padding: 10px 15px;
+            margin-right: 0;
+            &:hover, &:active, &:visited {
+            }
+        }
+    }
+    .header-brand-icon {
+        margin-right: 10px;
+    }
+}
+
+#footer {
+    height: 60px;
+    margin-top: 10px;
+    color: #777;
+    border-top: 1px solid #e5e5e5;
+    /*border-bottom: 1px solid #e5e5e5;*/
+    .footer-text {
+        padding-top: 19px;
+        padding-right: 15px;
+    }
+    .footer-left {
+        float: left;
+    }
+}
+
+/** Responsive: Portrait tablets and up **/
+@media screen and (min-width: 768px) {
+    .container {
+        max-width: 730px;
+    }
+
+    /** Remove the padding we set on the body earlier **/
+    #header,
+    #footer {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    /** Space out the masthead **/
+    .header {
+        margin-bottom: $STANDARD_MARGIN;
+    }
+}
+
+
+/****************************************************************************
+ **************************        SINGLETONS       *************************
+ ****************************************************************************/
+/* Style small unique elements */
+
+
+/* Position the gif that shows up when data is loading */
+#is-loading {
+    position: fixed;
+    bottom: 0px;
+    left: 20px;
+}
+
+/* Top-right cross to close a window */
+.close-icon {
+    position: absolute;
+    top: -6px;
+    right: 10px;
+    a {
+        color: black;
+        &:hover {
+            color: #30708F;
+        }
+    }
+    span {
+        font-size: 1.3em;
+    }
+}
+
+
+/****************************************************************************
+ **************************     COMMON ELEMENTS     *************************
+ ****************************************************************************/
+/* Style classes common to several modules */
+
+/* toastr repositioning */
+.toast-top-right {
+    top: 78px;
+    right: 17px;
+}
+
+.badge {
+    background-color: #333;
+}
+
+/* Same margin everywhere */
+#location-search, div.toolbar, #filter-toolbar {
+    margin-bottom: $STANDARD_MARGIN;
+}
+
+/* Remove the blue outline around buttons when they are clicked */
+.btn:focus,.btn:active:focus,.btn.active:focus,
+.btn.focus,.btn:active.focus,.btn.active.focus {
+    outline: none;
+}
+
+/* Remove the ugly blue thick line around selected buttons/links */
+.btn:focus, a:focus {
+    outline: none;
+}
+
+/* bootstrap glyphicons in blue */
+.glyphicon-remove,
+.help-tooltip {
+    color: $BS_COLOR;
+}
+
+
+/************ LOADING ***************/
+
+/* Contains a table and a loading gif. Has to be positioned (not static),
+   so that the loading message can be positioned absolute */
+div.table-container {
+    position: relative;
+    min-height: 400px;
+}
+/* Position the loading message that comes inside a table */
+div.loading-message.loading-message-lg {
+    position: absolute;
+    width: calc(100% - 2px);  /* save the margin */
+    height: calc(100% - 1.2em); /* all but the header */
+    top: 1.2em;  /* table header height */
+    left: 1px;  /* left margin */
+    padding-top: 1em;
+    overflow: visible;
+    /* Text */
+    font-size: 300%;
+    text-shadow: 2px 1px #555;
+    font-weight: bolder;
+    text-align: center;
+    color: orange;
+    /* Animated gif */
+    background-position: center 2em;
+    background-repeat: no-repeat;
+    background-color: white;
+    background-image: url(../images/loading-icon_original.gif);
+}
+
+.loading-gif {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: white;
+    background-image: url(../images/loading-icon_original.gif);
+    background-size: 120px;
+}
+
+/************ PANELS ****************/
+
+/* BS's Panel default bottom margin is 20, a bit too much */
+.panel {
+    margin-bottom: $STANDARD_MARGIN;
+}
+
+
+/************ MODAL *****************/
+/* Position the modal (e.g. Confirm window) where is it easily reachable */
+
+.modal, .modal-dialog {
+    top: 30%;
+}
+.modal-dialog {
+    width: 25%;
+}
+.confirm-ok-button,
+.confirm-cancel-button, {
+    margin-right: 5px;
+    width: 90px;
+}
+
+/*********** BUTTONS ****************/
+
+/* Space buttons placed one next to the other */
+#export-to-button,
+#select-columns-button,
+.confirm-ok-button,
+.confirm-cancel-button, {
+    margin-right: 5px;
+}
+
+
+/************* TABLES ***************/
+
+/* Remove useless stuff in fixed-data-table (used for samples selection and variants) */
+.public_fixedDataTable_bodyRow .public_fixedDataTableCell_main {
+    border-left: none;
+    border-right: none;
+    background-image: none;
+}
+/* Header names are links, but to trigger a sort, not to redirect */
+.public_fixedDataTable_header {
+    a {
+        color: black;
+        cursor: pointer;
+    }
+}
+
+/************* SUMMARIES ************/
+/* Top banners, common to samples and variants,
+   and filter groups that also have a similar clickable area */
+
+/* Common background */
+.summary-panel, .filter-group-head {
+    background-color: $LIGHT_GREY;
+}
+/* Change background on hover if it is a link */
+.link-hover {
+    &:hover {
+        background-color: $LIGHT_GREY_HOVER;
+        /*border: 1px solid #c7c7c7;*/
+    }
+}
+/* Change the default border of the panel on hover */
+.link-panel {
+    &:hover {
+        border: 1px solid #c7c7c7;
+    }
+}
+/* Prepend a plus sign to show that there is something else to see here */
+span.down-right:before {
+    content: "+ ";
+    color: blue;
+}
+

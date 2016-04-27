@@ -1,0 +1,116 @@
+
+@import "constants.scss";
+
+/****************************************************************************
+ *********************         SAMPLES SELECTION           ******************
+ ****************************************************************************/
+
+ /* Style everything contained inside the samples selection window */
+
+
+#samples-selection-toolbar {
+    .panel-body {
+        padding: 10px;
+        .panel-title {
+            margin-left: 20px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+}
+
+.selected-sample {
+    .public_fixedDataTableCell_main {
+        background-color: $HIGHLIGHT;
+    }
+}
+
+.btn.sample_group.active {
+    color: white;
+}
+.btn.sample_group.inactive {
+    background-color: $color_inactive_sample_group;
+}
+
+span.badge.sample_group {
+    color: white;
+}
+
+.btn.checkbox-unchecked{
+    background: url("../images/unchecked_checkbox.png") no-repeat scroll 6px 6px transparent;
+    background-size: 18px;
+    height: 30px;
+    width:30px;
+    border:none;
+}
+
+.btn.checkbox-checked{
+    background: url("../images/checked_checkbox2.png") no-repeat scroll 6px 6px transparent;
+    background-size: 18px;
+    height: 30px;
+    width:30px;
+    border:none;
+}
+
+span.badge.sample_group.sample_group_not_affected {
+    background-color: $color_sample_group_not_affected;
+}
+
+span.badge.sample_group.sample_group_affected {
+    background-color: $color_sample_group_affected;
+}
+
+.btn.sample_group_not_affected {
+    background-color: $color_sample_group_not_affected;
+    border-color: $color_border_sample_group_not_affected;
+    color:white;
+}
+
+.btn.sample_group_affected {
+    background-color: $color_sample_group_affected;
+    border-color: $color_border_sample_group_affected;
+    color:white;
+}
+
+.btn.sample_group_not_affected.active, .btn.sample_group_not_affected:hover {
+    background-color: $color_active_sample_group_not_affected;
+    border-color: $color_border_active_sample_group_not_affected;
+}
+
+.btn.sample_group_affected.active, .btn.sample_group_affected:hover {
+    background-color: $color_active_sample_group_affected;
+    border-color: $color_border_active_sample_group_affected;
+}
+
+.btn.sample_group {
+    width: 4em;
+}
+
+span.samples-summary, span.variants-summary {
+    margin-left: 1.4em;
+    font-size: 80%;
+}
+
+.samples-sex {
+    height: 100%;
+    width: 18px;
+    margin: 0 auto;
+    padding: 8px 0px;
+    background: url('../images/Gender_symbols_side_by_side_solid.svg') no-repeat;
+    background-size: 36px;
+    /*font: bold 15px arial, sans-serif;*/
+}
+.sample-sex-woman {
+}
+.sample-sex-man {
+    background-position: 100%;
+}
+
+/*
+.samples-selected-variants {
+    height: 60%;
+    margin: 0 auto;
+    padding: 0;
+}
+*/
+

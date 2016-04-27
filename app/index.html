@@ -1,0 +1,65 @@
+<!doctype html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta content="text/html">
+    <title>Varapp browser</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <!-- build:css styles/vendor.css -->
+    <!--<link rel="stylesheet" href="styles/react-select.css">-->   <!-- Dropdown selection module -->
+    <link rel="stylesheet" href="styles/fixed-data-table-base.css">
+    <link rel="stylesheet" href="styles/fixed-data-table-style.css">
+    <link rel="stylesheet" href="styles/toastr.css"/>  <!-- Warning/error windows module -->
+    <link rel="stylesheet" href="styles/varapp-font.css">  <!-- Custom genotypes sprites -->
+    <!-- endbuild -->
+    <link rel="stylesheet" href="styles/main.css">  <!-- Result of gulp compiling all css/scss files -->
+
+    <!-- build:js scripts/vendor/modernizr.js -->
+    <script src="bower_components/modernizr/modernizr.js"></script>
+    <!-- endbuild -->
+
+</head>
+<body>
+
+
+<div class='container-fluid'>
+    <div id="app-container"></div>
+    <div id="footer">
+    <span class='footer-text footer-left'>Powered by
+       <a class='external-link' href='http://gemini.readthedocs.org'>Gemini</a> -
+       <a class='external-link' href='https://facebook.github.io/react/'>React</a>
+    </span>
+        <span class='footer-text footer-left'>|</span>
+    <span class='footer-text footer-left'>
+        <a id='docs-link' href="http://varapp.vital-it.ch/docs" target="_blank">Documentation</a>
+    </span>
+    <span class='footer-text pull-right'>
+       <a id='contact-link' target="_top"
+          href="mailto:julien.delafontaine@isb-sib.ch?Subject=Varapp contact-info-help"
+       >Contact</a>
+    </span>
+    </div>
+</div>
+
+
+<!-- build:js scripts/vendor.js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<!-- bower:js -->
+
+<!-- endbower -->
+<!-- endbuild -->
+<script src="scripts/app.js"></script>
+
+</body>
+</html>

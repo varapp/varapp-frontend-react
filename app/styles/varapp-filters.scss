@@ -1,0 +1,180 @@
+
+@import "constants.scss";
+
+
+/****************************************************************************
+ ****************************       FILTERS      ****************************
+ ****************************************************************************/
+
+/* Style everything inside the variant filters panel */
+
+
+div.one-filter {
+    width: 100%;
+    padding-top: 0.5em;
+    clear: both;
+
+    div.filter-name {
+        width: 35%;
+        float: left;
+        font-weight: bold;
+        padding-right: 5px;
+
+        .glyphicon {
+            display: inline-block;
+        }
+    }
+    div.filter-input {
+        width: 65%;
+        float: left;
+
+        span.count {
+            font-size: 75%;
+            padding-left: 1em;
+        }
+
+        div.continuous-input {
+            width: 86%;
+        }
+    }
+}
+
+div.continuous-value-filter {
+    div.filter-input {
+        span.op-sign {
+            padding-right: 0.5em;
+        }
+    }
+}
+
+div.enum-filter {
+    div.enum-filter-name {
+        margin-top: 4px;
+    }
+    div.enum-filter-input {
+        width: 100%;
+        padding-left: 10px;
+        float: left;
+    }
+    div.enum-filter-name {
+        width: 100%;
+    }
+    .help-tooltip {
+        padding-left: 5px;
+    }
+}
+
+div.genotypes-filter {
+    padding-top: 0px;
+    div.genotypes-filter-name {
+        width: 100%;
+    }
+    div.genotypes-filter-input {
+        width: 100%;
+        padding-left: 10px;
+        float: left;
+    }
+    .help-tooltip {
+        padding-left: 5px;
+    }
+}
+
+div.truefalseany-filter {
+    div.filter-input {
+        div.one-choice {
+            float: left;
+        }
+        div.one-choice-true-false {
+            width: 36%;
+        }
+        div.one-choice-any {
+            width: 19%;
+        }
+        div.option-name {
+            display: inline-block;
+            white-space: nowrap;
+        }
+        small {
+            display: inline-block;
+            margin-left: 0.6em;
+        }
+        small.true {
+            width: 2.8em;
+        }
+        small.false {
+            width: 3.28em;
+        }
+    }
+}
+
+/* The cross to remove a filter from the summary */
+.remove-filter {
+    cursor: pointer;
+}
+
+div.frequency-slider-ticks {
+    height:22px;
+    div.tick {
+        font-size:80%;
+    }
+}
+
+div.panel.filter-group, div.panel.samples-panel {
+    a[data-toggle='collapse'][aria-expanded='false'] {
+        span.down-right:before {
+            content: "+ ";
+            color: blue;
+        }
+    }
+    a[data-toggle='collapse'][aria-expanded='true'] {
+        span.down-right:before {
+            content: "- ";
+            color: blue;
+        }
+
+    }
+}
+
+ul.filter-group-summary {
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    li {
+        list-style-type: circle;
+    }
+}
+
+#filter-toolbar {
+    overflow: hidden;
+    padding-bottom: 1px;
+    width: 100%;
+}
+
+#n-variants {
+    .panel-body {
+        padding: 6px 12px;
+        margin: 0;
+    }
+    font-weight: bold;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    margin-right: 5px;
+    border: 1px solid $BS_COLOR;
+}
+
+#reset {
+    float: right;
+    min-width: 50px;
+}
+
+#location-search {
+    .btn-default {
+        border-left: none;
+        background-color: $LIGHT_GREY;
+    }
+    .btn-default:hover {
+        background-color: $LIGHT_GREY_HOVER;
+    }
+}
+
+

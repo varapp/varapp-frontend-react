@@ -1,0 +1,129 @@
+
+@import "bootstrap-sass-official/assets/stylesheets/bootstrap";  /* To have glyphicons */
+@import "constants.scss";
+
+
+/***************************************************************************
+ **********************         VARIANTS TABLE        **********************
+ ***************************************************************************/
+
+/* Style everything contained inside the variants area, including its toolbar. */
+
+
+/* Not used now, it is the SVG version that does not work as well as the fonts version */
+.genotype-icon {
+    height: 100%;
+	display: inline-block;
+	background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+	background-image: url(../images/sprite-genotypes.svg);
+}
+.genotype-00 {
+	background-position: 0 0;
+}
+.genotype-01 {
+	background-position: -3em 0;
+}
+.genotype-10 {
+	background-position: -6em 0;
+}
+.genotype-11 {
+	background-position: -9em 0;
+}
+
+.genotypes-container {
+    padding: 0;
+    height: 100%;
+    margin: 5px auto;
+    cursor: pointer;
+}
+.genotype-index {
+    font-family: 'icomoon';
+    font-size: 150%;
+}
+
+.source-container {
+    padding: 0px;
+    margin: 10px auto;
+
+    .source {
+        height: 15px;
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+    .source-maternal {
+        color: #ce758b;
+        background-image: url(../images/SourceParent/gen_source_refalt.svg);
+    }
+    .source-paternal {
+        color: blue;
+        background-image: url(../images/SourceParent/gen_source_altref.svg);
+    }
+}
+
+span.sample_group_affected{
+    color:$color_active_sample_group_affected;
+}
+span.sample_group_not_affected{
+    color:$color_active_sample_group_not_affected;
+}
+span.sample_group_unknown{
+    color:$color_active_sample_group_unknown;
+}
+
+.variants-toolbar {
+    .select-columns-container a[role=menuitem] {
+        color: black;
+        display: block;
+        width: 100%;
+        text-decoration: none;
+    }
+    .select-columns-section-header {
+        color: grey;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 7px;
+    }
+    hr {
+        margin: 10px 0px;
+    }
+    .remove-bookmark-button {
+        color: red;
+        border: none;
+    }
+    .dropdown-menu > li > a {
+        padding: 3px 10px ;
+    }
+    .form-group {
+        margin: 0;
+    }
+}
+
+.selected-variant {
+    .public_fixedDataTableCell_main {
+        background-color: $HIGHLIGHT;
+    }
+}
+
+a.xref-link {
+    cursor: alias;
+}
+
+/* Loading next rows batch message:
+   and orange box at the bottom of the table, with text centered inside */
+div.loading-message.loading-next-rows {
+    position: absolute;
+    width: 60%;
+    left: 20%;  /* 100-width / 2, to center horizontally */
+    bottom: 0;
+    height: 50px;
+    background-color: orange;
+    /* Text */
+    text-align: center;
+    font-size: 180%;
+    line-height: 50px;  /* same as height, to center vertically */
+    vertical-align: middle;
+}
+

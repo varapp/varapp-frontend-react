@@ -1,0 +1,15 @@
+
+#admin-panel {
+    .admin-users-panel, .admin-dbs-panel {
+        display: table;
+    }
+    table  {
+        table-layout: fixed;
+        max-width: 100%;
+        td {
+            background: white;
+            max-width: 100%;
+            text-overflow: ellipsis;
+        }
+    }
+}

@@ -1,0 +1,43 @@
+
+
+@import "constants.scss";
+
+
+/****************************************************************************
+ *************************     LOOKUP  PANEL      ***************************
+ ****************************************************************************/
+
+
+#lookup-panel {
+    .panel {
+        .panel-body {
+            padding: 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        p {
+            margin: 0;
+            padding: 0;
+        }
+    }
+    .table {
+        margin-bottom: 0px;
+        td {
+            vertical-align: middle;
+        }
+    }
+    .lookup-sample-name {
+        padding-left: 15px;
+    }
+    .lookup-genotype {
+        text-align: center;
+    }
+}
+
+a.lookup-link {
+    cursor: pointer;
+    /*text-decoration: none;*/
+    color: $BS_COLOR;
+}
+
+

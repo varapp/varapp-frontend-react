@@ -1,0 +1,27 @@
+
+
+/****************************************************************************
+ *************************         LOGIN          ***************************
+ ****************************************************************************/
+
+/* Style everything concerning login, including log out, password reset, etc. */
+
+
+div.form-actions a {
+    display: inline-block;
+    margin-left: 2em;
+}
+
+.help-block {
+
+}
+
+.error-block {
+    color: red;
+    font-weight: bold;
+}
+
+.login-message {
+    padding-left: 15px;
+    padding-top: 15px;
+}
