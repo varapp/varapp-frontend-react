@@ -59,7 +59,7 @@ var ChangePassword = React.createClass({
                     <div className='panel-body'>
 
 <form id='forget-password-form' name="form" role="form" noValidate className='form-horizontal'>
-    <GenericInput callback={this.formChanged} fieldName='username' label='Username' />
+    <GenericInput callback={this.formChanged} id='username' name='username' label='Username' />
     <EmailInput callback={this.formChanged} label='Email' />
     <div className='form-actions col-sm-9 col-sm-offset-3'>
         <button type="submit" className="submit-button btn btn-primary" disabled={!this.formValid()}

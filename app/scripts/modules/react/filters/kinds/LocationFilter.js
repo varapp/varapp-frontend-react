@@ -6,7 +6,7 @@ var restClient = require('../../../utils/RestClientService');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
 var ReactBoostrap = require('react-bootstrap');
-var Input = ReactBoostrap.Input;
+var Input = ReactBoostrap.FormControl;
 var Glyphicon = ReactBoostrap.Glyphicon;
 var Button = ReactBoostrap.Button;
 

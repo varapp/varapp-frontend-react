@@ -169,7 +169,7 @@ var GenotypesLookup = React.createClass({
         var samples = this.props.samples;
         var genotypes = variant.genotypes_index;
         var lines = _.map(samples, function (sample, i) {
-            if (!genotypes[i]) {return <span></span>;} // TODO: same as above, solve that somehow
+            if (!genotypes[i]) {return '';} // TODO: same as above, solve that somehow
             var genotype = genotypes[i].join('');  // [null,null].join('') returns ''
             var sexSymbol = sample.sex === 'M' ? '♂ ' : '♀ ';
             var parents = (sample.mother_id ? '♀ '+sample.mother_id+' ' : '') + (sample.father_id ? '♂ '+sample.father_id : '');
@@ -184,6 +184,8 @@ var GenotypesLookup = React.createClass({
                     </td>
                     <td className='lookup lookup-parents text-center'>{parents ? parents : parentKind}</td>
                 </tr>;
+            } else {
+                return '';
             }
         });
         return <Table condensed>

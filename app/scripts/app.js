@@ -207,7 +207,9 @@ var App = React.createClass({
                 isLoggingIn: false,
             });
 
-            this._initStores(db);
+            if (user.isActive) {
+                this._initStores(db);
+            }
         }
     },
 

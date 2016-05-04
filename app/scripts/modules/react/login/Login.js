@@ -17,6 +17,9 @@ var FormComponents = require('./FormComponents');
 var GenericInput = FormComponents.GenericInput;
 var PasswordInput = FormComponents.PasswordInput;
 
+var ReactBootstrap = require('react-bootstrap');
+var Panel = ReactBootstrap.Panel;
+
 
 var Login = React.createClass({
     contextTypes: {
@@ -26,9 +29,23 @@ var Login = React.createClass({
         return {
             username: '',
             password: '',
-            valid: {username:false, password:false},
+            valid: {username: false, password: false},
             wrong: false,  // wrong password or user name
         };
+    },
+
+    /* Demo version: auto-fill login fields and validate */
+    componentWillMount: function() {
+        this.isDemo = window.location.hostname === "varapp-demo.vital-it.ch"
+        //this.isDemo = window.location.hostname === "varapp-dev.vital-it.ch"; // test dev
+        //this.isDemo = window.location.hostname === "localhost";  // test local
+        if (this.isDemo) {
+            this.setState({
+                username: 'demo',
+                password: 'demo',
+                valid: {username: true, password: true},
+            });
+        }
     },
 
     login(e) {
@@ -62,21 +79,33 @@ var Login = React.createClass({
         } else if (!user.isActive) {
             msg = 'This account is not active yet. Please log in again after an admin has taken care of it.';
         }
+        var header = <h3>Login</h3>;
+
+        /* Demo version: disable fields edition, use defaults, and display welcome message */
+        var placeholder;
+        var value;
+        var callback = this.formChanged;
+        if (this.isDemo) {
+            placeholder = 'demo';
+            value = 'demo';
+            msg = 'Welcome to Varapp ! This is a demo. Click the Login button to enter.';
+            callback = function() {};
+        }
 
         return (
             <div>
-                <p className='login-message'>{msg}</p>
-
-            <div id='login' className="col-md-6 col-md-offset-3">
-                <div className='panel panel-default' style={{marginTop: '50px'}}>
-                    <div className='panel-heading'>
-                        <div className='panel-title'>Login</div>
-                    </div>
-                    <div className='panel-body'>
+                <div id='login' className="col-md-6 col-md-offset-3" style={{marginTop: '50px'}}>
+                    {msg ? <Panel>{msg}</Panel> : '' }
+                    <Panel header={header}>
 
 <form name="form" role="form" noValidate className='form-horizontal'>
-    <GenericInput callback={this.formChanged} fieldName='username' label='Username' validate={false} wrong={this.state.wrong} />
-    <PasswordInput callback={this.formChanged} confirm={false} required={false} validate={false} wrong={this.state.wrong} />
+    <GenericInput callback={callback}
+        id='username' name='username' label='Username'
+        placeholder={placeholder} value={value}
+        validate={false} wrong={this.state.wrong} />
+    <PasswordInput callback={callback}
+        confirm={false} required={false} validate={false} wrong={this.state.wrong}
+        placeholder={placeholder} value={value} />
     <div className='form-actions col-sm-9 col-sm-offset-3'>
         <button type="submit" className="submit-button btn btn-primary"
             onClick={this.login} disabled={!this.formValid()}>Login</button>
@@ -85,9 +114,8 @@ var Login = React.createClass({
     </div>
 </form>
 
-                    </div>
+                    </Panel>
                 </div>
-            </div>
             </div>
         );
     }
@@ -95,4 +123,3 @@ var Login = React.createClass({
 
 
 module.exports = Login;
-

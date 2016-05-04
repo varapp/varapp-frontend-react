@@ -48,7 +48,7 @@ var descriptions = {
             'There may be several combinations of pairs; each affected sample carries at least one.',
         'x_linked': 'X-linked: recessive impact variants present on chromosome X only. ' +
             'Carried by either affected sons and their mother, ' +
-            'or by affected daughters (homozygous) and both their parents. ' +
+            'or by affected daughters (homozygous) and both their parents (and the father is affected). ' +
             'For dominant X-linked variants, use the \'dominant\' scenario while filtering on \'chrX\' in the Location search bar.'
     },
     'impact_severity': {

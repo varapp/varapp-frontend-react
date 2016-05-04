@@ -12,6 +12,7 @@ var React = require('react');
     inputType: string,  // Type of input field ('text', 'email', ...). Defaults to 'text'.
     errorMsg: string,   // Error message if the input is not valid.
     wrong: bool,        // If true, highlight in red
+    All other props are passed to <input/>.
 */
 class GenericInput extends React.Component {
     constructor() {
@@ -38,20 +39,15 @@ class GenericInput extends React.Component {
         return this.props.validate ? this.isAlphanumeric(v) : true;
     }
     render() {
+        var {name, label, inputType, required, errorMsg, wrong, ...others} = this.props;
         var value = this.state.value;
-        var fieldName = this.props.fieldName;
-        var label = this.props.label;
-        var inputType = this.props.inputType;
-        var required = this.props.required;
-        var errorMsg = this.props.errorMsg;
         var valid = this.isValid(value);
         var empty = value.length === 0;
-        var wrong = this.props.wrong;
         return <div className={'form-group '+ ((!empty && !valid && this.props.validate) || wrong ? 'has-error' : '')}>
             <label className='col-sm-3 control-label'>{label + (required?' *':'')}</label>
             <div className='col-sm-6'>
-                <input type={inputType} name={fieldName} id={fieldName} className="form-control"
-                    onChange={this.update.bind(this, fieldName)} />
+                <input type={inputType} className="form-control" name={name}
+                    onChange={this.update.bind(this, name)} {...others} />
             </div>
             {this.props.validate && !valid && !empty ?
                 <div className="col-sm-3"><span className="help-block error-block"
@@ -91,7 +87,7 @@ class EmailInput extends GenericInput {
     }
 }
 EmailInput.defaultProps = {
-    fieldName: 'email',
+    name: 'email',
     label: 'Email',
     validate: true,
     type: 'email',
@@ -111,7 +107,7 @@ class PhoneInput extends GenericInput {
     }
 }
 PhoneInput.defaultProps = {
-    fieldName: 'phone',
+    name: 'phone',
     label: 'Phone number',
     validate: true,
     required: false,
@@ -143,9 +139,9 @@ class PasswordInput extends React.Component {
         }
     }
     /* Set password when it changes */
-    updatePassword(e) {
+    updatePassword(e) {        this.setState({password: e.target.value});
         this.formChanged(e.target.value, this.state.password2);
-        this.setState({password: e.target.value});
+
     }
     /* Set password2 when it changes */
     updateConfirmedPassword(e) {
@@ -158,15 +154,13 @@ class PasswordInput extends React.Component {
         return s.length >= this.props.minChars && re.test(s);
     }
     render() {
+        var {confirm, wrong, required, validate, after, ...others} = this.props;
         var password = this.state.password;
-        var required = this.props.required;
-        var confirm = this.props.confirm;
         var empty = password.length === 0;
         var valid = this.passwordValid(this.state.password);
-        var wrong = this.props.wrong;
         var confirmed = password === this.state.password2;
-        var hasError = this.props.validate && !valid && !empty;
-        var errorMsg = !this.props.validate ? '' :
+        var hasError = validate && !valid && !empty;
+        var errorMsg = !validate ? '' :
             password.length < this.props.minChars ? 'Password is too short (min 8 chars)' : 'Password is not valid';
         return (
             <div>
@@ -174,12 +168,12 @@ class PasswordInput extends React.Component {
                     <label className='col-sm-3 control-label'>{'Password' + (required?' *':'')}</label>
                     <div className='col-sm-6'>
                         <input type='password' name='password' id='password' className="form-control"
-                            onChange={this.updatePassword} />
+                            onChange={this.updatePassword} {...others} />
                     </div>
                     {hasError ?
                         <div className="col-sm-3"><span className="help-block error-block"
                             >{errorMsg}</span></div> : ''}
-                    {this.props.after}
+                    {after}
                 </div>
                 {confirm ? (
                     <div className={'form-group '+ (!confirmed ? 'has-warning':'')}>

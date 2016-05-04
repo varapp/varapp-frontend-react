@@ -17,7 +17,7 @@ var Confirm = require('../utils/Confirm');
 var ReactBootstrap = require('react-bootstrap');
 var ButtonGroup = ReactBootstrap.ButtonGroup;
 var Button = ReactBootstrap.Button;
-var Input = ReactBootstrap.Input;
+var Input = ReactBootstrap.FormControl;
 var Panel = ReactBootstrap.Panel;
 var Popover = ReactBootstrap.Popover;
 var OverlayTrigger = ReactBootstrap.OverlayTrigger;
@@ -267,12 +267,11 @@ var SearchBar = React.createClass({
         SamplesActions.filterByPrefix(e.target.value);
     },
     render: function () {
-        var _this = this;
-        return <Input id='samples-search-bar'
+        return <input className="form-control" id='samples-search-bar'
             placeholder="Search"
             type="text"
-            onKeyDown={_this.preventDefault}  // Otherwise hitting Enter key reloads the page
-            onKeyUp={_this.search}
+            onKeyDown={this.preventDefault}  // Otherwise hitting Enter key reloads the page
+            onKeyUp={this.search}
         />;
     },
 });

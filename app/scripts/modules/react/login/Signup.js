@@ -65,21 +65,19 @@ var Signup = React.createClass({
         var msg;
         return (
             <div>
-                <p className='login-message'>{msg}</p>
-
-            <div className="col-md-6 col-md-offset-3">
-                <div className='panel panel-default' style={{marginTop: '50px'}}>
-                    <div className='panel-heading'>
-                        <div className='panel-title'>
-                            Register new user
+                <div className="col-md-6 col-md-offset-3">
+                    <div className='panel panel-default' style={{marginTop: '20px'}}>
+                        <div className='panel-heading'>
+                            <div className='panel-title'>
+                                Register new user
+                            </div>
                         </div>
-                    </div>
-                    <div className='panel-body'>
+                        <div className='panel-body'>
 
 <form id='signup-form' name="form" role="form" noValidate className='form-horizontal'>
-    <GenericInput callback={this.formChanged} fieldName='username' label='Username' required />
-    <GenericInput callback={this.formChanged} fieldName='firstname' label='First name' />
-    <GenericInput callback={this.formChanged} fieldName='lastname' label='Last name' />
+    <GenericInput callback={this.formChanged} id='username' name='username' label='Username' required />
+    <GenericInput callback={this.formChanged} id='firstname' name='firstname' label='First name' />
+    <GenericInput callback={this.formChanged} id='lastname' name='lastname' label='Last name' />
     <EmailInput callback={this.formChanged} label='Email' required />
     <PhoneInput callback={this.formChanged} />
     <PasswordInput callback={this.formChanged} confirm />
@@ -90,9 +88,9 @@ var Signup = React.createClass({
     </div>
 </form>
 
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
         );
     }

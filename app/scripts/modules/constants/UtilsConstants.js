@@ -17,12 +17,6 @@ var CLINVAR_LINK = 'http://www.ncbi.nlm.nih.gov/clinvar/';
 var EXAC_LINK = 'http://exac.broadinstitute.org/variant/';
 var OMIM_LINK = 'http://www.omim.org/search?sort=score+desc%2C+prefix_sort+desc&search=';
 
-var ROLE_SUPERUSER = 1;
-var ROLE_ADMIN = 2;
-var ROLE_HEAD = 3;
-var ROLE_GUEST = 4;
-var ROLE_DEMO = 5;
-
 module.exports = {
     ASC,
     DESC,

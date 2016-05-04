@@ -2,7 +2,7 @@
 var React = window.React = require('react');
 var $ = require('jquery');
 var _ = require('lodash');
-var env = require('../environment');
+var env = require('../../../conf/environment');
 var AuthenticatedComponent = require('../react/login/AuthenticatedComponent');
 
 /**

@@ -1,7 +1,10 @@
 'use strict';
 var React = require('react');
 
+/* Actions */
 var LoginActions = require('../../actions/LoginActions');
+
+/* Stores */
 var LoginStore = require('../../stores/LoginStore');
 
 /* Utils */
@@ -80,8 +83,8 @@ var EditableField = React.createClass({
         change.then(
             function() {
                 toastr.success("Changed "+field+" to "+ _this.state.value);
-            }, function(error) {
-                toastr.error("Could not update "+field+": "+error);
+            }, function() {
+                toastr.error("Could not update "+field);
             }
         );
     },
@@ -142,8 +145,8 @@ var PasswordChange = React.createClass({
                 function() {
                     toastr.success("Password changed successfully");
                 },
-                function(error) {
-                    toastr.error("Could not update password: "+error);
+                function() {
+                    toastr.error("Could not update password");
                 }
             );
         // Make the buttons disappear

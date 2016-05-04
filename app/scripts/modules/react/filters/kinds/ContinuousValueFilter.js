@@ -10,7 +10,7 @@ var HelpTooltip = require('../../tooltips/HelpTooltip.js').HelpTooltip;
 
 var ReactBootstrap = require('react-bootstrap');
 var Glyphicon = ReactBootstrap.Glyphicon;
-var Input = ReactBootstrap.Input;
+var Input = ReactBootstrap.FormControl;
 
 /* Better formatting of inequality signs */
 var OP_SIGNS = {'>=':'≥', '<=':'≤', '<':'<', '>':'>'};

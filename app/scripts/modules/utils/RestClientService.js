@@ -1,7 +1,7 @@
 'use strict';
 var LogActions = require('../actions/LogActions');
 var UtilsConstants = require('../constants/UtilsConstants');
-var env = require('../environment');
+var env = require('../../../conf/environment');
 var $ = require('jquery');
 var toastr = require('toastr');
 
@@ -18,7 +18,7 @@ var RestClientService = function(){
     return this;
 };
 
-/* Send error for display in LoagPanel and toastr */
+/* Send error for display in LogPanel and toastr */
 RestClientService.prototype.sendError = function(err, msg) {
     LogActions.sendError('('+err.status+') '+msg);
     toastr.error(msg);

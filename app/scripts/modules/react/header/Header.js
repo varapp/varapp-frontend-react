@@ -59,7 +59,7 @@ var NavPills = React.createClass({
     _onChange: function() {
         this.setState({ user: LoginStore.getUser() });
     },
-    changeDB: function(e) {
+    changeDB: function(eventKey, e) {
         var dbname = e.target.innerHTML;
         AppActions.changeDatabase(dbname);
         /* Make the change visible right away, otherwise it changes only when all stores finish loading */

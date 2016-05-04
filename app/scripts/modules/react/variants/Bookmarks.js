@@ -28,7 +28,7 @@ var Button = ReactBoostrap.Button;
 var ButtonGroup = ReactBoostrap.ButtonGroup;
 var Popover = ReactBoostrap.Popover;
 var OverlayTrigger = ReactBoostrap.OverlayTrigger;
-var Input = ReactBoostrap.Input;
+var Input = ReactBoostrap.FormControl;
 var Dropdown = ReactBoostrap.Dropdown;
 
 toastr.options = UtilsConstants.TOASTR_OPTIONS;
@@ -159,38 +159,37 @@ var SaveBookmarkButton = React.createClass({
             }
         }
         this.props.setBookmark(true, this.state.text);
-        this.refs.bookmarkDescriptionInput.refs.input.value = '';  // <Input/> = <div><input/></div>
+        this.input.value = '';
         this.setState(this.getInitialState());
     },
-    /* Called whenever a change is made to the <input> */
-    onSelect: function(e, eventKey) {
-        this.setState({
-            open: eventKey !== 2,
-            text: e.target.value,
-        });
+    onInputTextChange: function(e) {
+        this.setState({ text: e.target.value });
     },
     toggle: function() {
-        this.setState({open: !this.state.open});
+        if (document.activeElement !== this.input) {
+            this.setState({open: !this.state.open});
+        }
     },
+
     render: function() {
         var preventDefault = e => e.preventDefault();
         var addBookmarkPopover = <Popover id={'add-bookmark-tooltip'}>Save bookmark</Popover>;
         return (
             <OverlayTrigger placement='top' overlay={addBookmarkPopover}>
-            <Dropdown id='save-bookmark-button' open={this.state.open} onToggle={this.toggle} onSelect={this.onSelect}>
+            <Dropdown id='save-bookmark-button' open={this.state.open} onToggle={this.toggle}>
                 <Button bsRole='toggle' bsStyle='primary' onClick={preventDefault}>
                     <Glyphicon glyph='tag'/>
                 </Button>
                 <div bsRole='menu' className='dropdown-menu'>
-                    <MenuItem eventKey={1}>
-                        <Input type='text' ref='bookmarkDescriptionInput'
-                            onChange={e => this.setState({text: e.target.value})}
+                    <MenuItem eventKey='1'>
+                        <input className="form-control" type='text' ref={input => this.input = input}
+                            onChange={this.onInputTextChange}
                             onKeyPress={this.setBookmark}
                         />
                     </MenuItem>
-                    <MenuItem eventKey={2}>
+                    <MenuItem eventKey='2'>
                         <Button block bsStyle='primary' onClick={this.setBookmark}>
-                        {'Save'}
+                            {'Save'}
                         </Button>
                     </MenuItem>
                 </div>
@@ -199,6 +198,7 @@ var SaveBookmarkButton = React.createClass({
         );
     },
 });
+
 
 
 module.exports = Bookmarks;

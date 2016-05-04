@@ -1,5 +1,5 @@
 'use strict';
-var env = require('../environment');
+var env = require('../../../conf/environment');
 var RestClient = require('./RestClientService');
 var RestService = function() {};
 
