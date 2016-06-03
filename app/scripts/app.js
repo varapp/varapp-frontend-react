@@ -59,7 +59,7 @@ var App = React.createClass({
         router: React.PropTypes.object
     },
     getInitialState: function () {
-        console.log("URL query params:", JSON.stringify(this.props.location.query, true, 2));
+        console.log("URL 'query' params:", JSON.stringify(this.props.location.query, true, 2));
         var urlQuery = this.props.location.query;
         var localQuery = JSON.parse(localStorage.getItem('query')) || {};
         return {

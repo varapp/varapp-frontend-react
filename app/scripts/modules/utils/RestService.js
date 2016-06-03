@@ -1,5 +1,4 @@
 'use strict';
-var env = require('../../../conf/environment');
 var RestClient = require('./RestClientService');
 var RestService = function() {};
 
@@ -68,7 +67,7 @@ RestService.prototype.signup = function (username, password, firstname, lastname
     return RestClient.post('/signup', {username, password, firstname, lastname, email, phone});
 };
 RestService.prototype.resetPasswordRequest = function(username, email) {
-    var host = env.frontendUrl;
+    var host = window.location.origin;
     return RestClient.post('/resetPasswordRequest', {username, email, host});
 };
 RestService.prototype.resetPasswordConfirm = function(username, email, activation_code) {

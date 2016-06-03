@@ -1,10 +1,11 @@
 'use strict';
 var LogActions = require('../actions/LogActions');
 var UtilsConstants = require('../constants/UtilsConstants');
-var env = require('../../../conf/environment');
 var $ = require('jquery');
 var toastr = require('toastr');
+var backendUrl = window.CONFIG.BACKEND_URL;
 
+console.debug("Backend URL:", backendUrl);
 toastr.options = UtilsConstants.TOASTR_OPTIONS;
 toastr.options.timeOut = 12000;
 
@@ -59,8 +60,8 @@ RestClientService.prototype.reportError = function(err, uri) {
         msg = json.message;
         this.sendError(err, msg);
     } else {
-        err.uri = env.backendUrl+uri;
-        LogActions.sendError('Error returned from GET '+ env.backendUrl+uri);
+        err.uri = backendUrl + uri;
+        LogActions.sendError('Error returned from GET '+ backendUrl + uri);
         msg = msg + err.status+' '+err.statusText+' - '+err.responseText;
         this.sendError(err, msg);
     }
@@ -78,7 +79,7 @@ RestClientService.prototype.get = function(uri){
     var auth = jwt ? 'JWT '+jwt : 'null';
     //console.log('RestClientService :: jwt ::', !!jwt)
     return $.ajax({
-        url: env.backendUrl + uri,
+        url: backendUrl + uri,
         type: 'GET',
         headers: {'Authorization': auth},
         error: function(err) {
@@ -99,7 +100,7 @@ RestClientService.prototype.post = function(uri, data){
     var auth = jwt ? 'JWT '+jwt : 'null';
     //console.log('RestClientService :: jwt ::', !!jwt)
     return $.ajax({
-        url: env.backendUrl + uri,
+        url: backendUrl + uri,
         type: 'POST',
         headers: {'Authorization': auth},
         data: data,

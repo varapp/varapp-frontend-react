@@ -7,6 +7,7 @@ var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
 var ReactBoostrap = require('react-bootstrap');
 var Input = ReactBoostrap.FormControl;
+var InputGroup = ReactBoostrap.InputGroup;
 var Glyphicon = ReactBoostrap.Glyphicon;
 var Button = ReactBoostrap.Button;
 
@@ -68,8 +69,9 @@ var LocationFilter = React.createClass({
 
     render: function () {
         var _this = this;
-        var innerButton = <Button><Glyphicon glyph='search' /></Button>;
+        var innerButton = <Button style={{border:'none'}}><Glyphicon glyph='search'/></Button>;
         return (
+            <InputGroup>
             <Input
                 className={"location-search typeahead"}
                 bsStyle={this.state.success ? 'success' : (this.state.error?'error':null)}
@@ -78,9 +80,10 @@ var LocationFilter = React.createClass({
                 placeholder={this.props.value || "Location: geneA,geneB or chr1:123-456"}
                 onKeyPress={_this.search}
                 onBlur={_this.search}
-                buttonAfter={innerButton}
                 valueLink={this.linkState('text')}
             />
+            <InputGroup.Addon style={{padding:'0', margin:'0'}}>{innerButton}</InputGroup.Addon>
+            </InputGroup>
         );
     },
 });

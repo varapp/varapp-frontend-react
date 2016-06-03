@@ -62,7 +62,6 @@ var Signup = React.createClass({
     },
 
     render() {
-        var msg;
         return (
             <div>
                 <div className="col-md-6 col-md-offset-3">

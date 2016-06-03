@@ -28,7 +28,6 @@ var Button = ReactBoostrap.Button;
 var ButtonGroup = ReactBoostrap.ButtonGroup;
 var Popover = ReactBoostrap.Popover;
 var OverlayTrigger = ReactBoostrap.OverlayTrigger;
-var Input = ReactBoostrap.FormControl;
 var Dropdown = ReactBoostrap.Dropdown;
 
 toastr.options = UtilsConstants.TOASTR_OPTIONS;

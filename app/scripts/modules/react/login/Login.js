@@ -36,7 +36,7 @@ var Login = React.createClass({
 
     /* Demo version: auto-fill login fields and validate */
     componentWillMount: function() {
-        this.isDemo = window.location.hostname === "varapp-demo.vital-it.ch"
+        this.isDemo = window.location.hostname === "varapp-demo.vital-it.ch";
         //this.isDemo = window.location.hostname === "varapp-dev.vital-it.ch"; // test dev
         //this.isDemo = window.location.hostname === "localhost";  // test local
         if (this.isDemo) {
@@ -109,8 +109,10 @@ var Login = React.createClass({
     <div className='form-actions col-sm-9 col-sm-offset-3'>
         <button type="submit" className="submit-button btn btn-primary"
             onClick={this.login} disabled={!this.formValid()}>Login</button>
-        <Link id='signup-link' to='/signup'>Register</Link>
-        <Link id='forget-password-link' to='/forgetPassword'>I forgot my password</Link>
+        {!this.isDemo ?
+            <Link id='signup-link' to='/signup'>Register</Link> : '' }
+        {!this.isDemo ?
+            <Link id='forget-password-link' to='/forgetPassword'>I forgot my password</Link> : '' }
     </div>
 </form>
 

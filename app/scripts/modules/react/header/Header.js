@@ -35,7 +35,7 @@ var Header = React.createClass({
                     </div>
                 </span>
                 <LinkToVarapp style={{textDecoration: 'none'}}><h3 className="text-muted">
-                    Varapp browser
+                    {"Varapp browser"}
                 </h3></LinkToVarapp>
             </div>
         );

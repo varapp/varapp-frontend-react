@@ -4,7 +4,6 @@
  * Gulp tasks as defined in `gulp.task('taskname') {...}` will execute the code in brackets
  * when called from command-line as `gulp taskname`.
  * */
-
 var gulp = require('gulp');
 var del = require('del');                // To 'delete files/folders using globs'
 
@@ -20,21 +19,93 @@ var stripDebug = require('gulp-strip-debug');  // To remove console.log statemen
 require('harmonize')();
 
 var path = require('path');               // Path string manipulations
-var browserify = require('browserify');   // To use `require` and bundle dependencies
+var browserify = require('browserify');   // To bundle 'require' dependencies:
+    // browserify recursively analyzes all the require() calls in the source files you give it
+    // in order to build a bundle you can serve up to the browser in a single <script> tag."
+    // Return a browserify instance.
 var watchify = require('watchify');       // To be able to watch changes in the code
-var source = require('vinyl-source-stream'),  // "Use conventional text streams at the start of your gulp pipelines,
-    sourceFile = './app/scripts/app.js',      // for nicer interoperability with the existing npm stream ecosystem."
+var source = require('vinyl-source-stream')   // "Use conventional text streams at the start of your gulp pipelines,
+var sourceFile = './app/scripts/app.js',      // for nicer interoperability with the existing npm stream ecosystem."
     destFolder = './dist/scripts',
     destFileName = 'app.js';
 
 var browserSync = require('browser-sync');  // Serve, and keep multiple browsers & devices in sync when building websites
 var reload = browserSync.reload;
 
-// Styles
-gulp.task('styles', ['sass']);
-gulp.task('sass', function () {
-    return gulp.src(['app/styles/**/*.scss', 'app/styles/**/*.css'])
+
+/*************************************************************************/
+/***************         DEV: watch for changes           ****************/
+/*************************************************************************/
+
+// Read 'requires' to build a .js bundle (browserify).
+// No need to define a task, just attach it to events with bundler.on like below.
+var bundler = browserify(sourceFile, {  // the original 'app.js', without deps
+    debug: true,          // "add a source map inline to the end of the bundle. This makes debugging easier because you can see all the original files if you are in a modern enough browser."
+    insertGlobals: true,  // "always insert process, global, __filename, and __dirname without analyzing the AST for faster builds but larger output bundles."
+    fullPaths: true       // "disables converting module ids into numerical indexes. This is useful for preserving the original paths that a bundle was generated with."
+});
+// What to do when code changed (bundler.on update, or 'script' task).
+// Move the 'app.js' bundle resulting from browserify to 'dist/scripts/' and reload the browser.
+function rebundle() {
+    return bundler
+        .bundle()
+        .on('error', $.util.log.bind($.util, 'Browserify Error'))  // log errors if they happen
         .pipe(plumber())
+        .pipe(source(destFileName))  // app.js bundle
+        .pipe(gulp.dest(destFolder)) // dist/scripts/
+        .on('end', function () {
+            reload();
+        });
+}
+// Watch changes in source files, rebundle if changed
+var watcher = watchify(bundler);
+watcher.on('update', rebundle);
+watcher.on('log', $.util.log);
+
+// [DEV] bundle task
+gulp.task('scripts_dev', rebundle);
+
+
+/*************************************************************************/
+/***************         Build and move sources           ****************/
+/*************************************************************************/
+
+// Browserify bundle task - without 'watchify'
+// Builds 'app.js' bundle with all 'require' dependencies and moves it to dist/scripts
+gulp.task('scripts', function () {
+    return browserify(sourceFile)  // The original, unbundled, app.js
+        .bundle()
+        .pipe(plumber())
+        .pipe(source(destFileName))  // The bundle with all dependencies, also 'app.js'
+        //.pipe($.babel())
+        //.transform("babelify", {presets: ["es2015", "react"]})
+        .pipe(gulp.dest('dist/scripts'));
+});
+
+// Config files to not bundle but just copy to dest
+// Since conf.js is not referenced by a 'require' anywhere, it is not bundled with browserify.
+gulp.task('config', function () {
+    return gulp.src(['app/conf/*.json', 'app/conf/*.js'])
+        .pipe(plumber())
+        .pipe(gulp.dest('dist/conf/'));
+});
+
+// Bower components
+gulp.task('bower', function () {
+    return gulp.src('app/bower_components/**/*.js', {
+            base: 'app/bower_components'
+        })
+        .pipe(plumber())
+        .pipe(gulp.dest('dist/bower_components/'));
+
+});
+
+// Styles
+// Compile SASS
+gulp.task('sass', function () {
+    return gulp.src('app/styles/**/*.scss')
+        .pipe(plumber())
+        //.pipe($.changed('dist/styles', {extension: '.css'}))  // does not work well because of @import
         .pipe($.rubySass({
             style: 'expanded',
             precision: 10,
@@ -42,55 +113,17 @@ gulp.task('sass', function () {
         }))
         .pipe($.autoprefixer('last 1 version'))  // Automatically applies CSS prefixes such as webkit- moz- etc.
         .pipe(gulp.dest('dist/styles'))
+        .pipe($.size());  // Log out the size of files in the stream
+});
+// CSS
+gulp.task('css', function() {
+    return gulp.src('app/styles/**/*.css')
+        .pipe(plumber())
+        .pipe($.autoprefixer('last 1 version'))
+        .pipe(gulp.dest('dist/styles'))
         .pipe($.size());
 });
-
-
-// Scripts
-function rebundle() {
-    return bundler.bundle()
-        // log errors if they happen
-        .on('error', $.util.log.bind($.util, 'Browserify Error'))
-        .pipe(plumber())
-        .pipe(source(destFileName))
-        .pipe(gulp.dest(destFolder))
-        .on('end', function () {
-            reload();
-        });
-}
-
-var bundler = watchify(browserify({
-    entries: [sourceFile],
-    debug: true,
-    insertGlobals: true,
-    cache: {},
-    packageCache: {},
-    fullPaths: true
-}));
-
-bundler.on('update', rebundle);
-bundler.on('log', $.util.log);
-
-gulp.task('scripts', rebundle);
-
-gulp.task('buildScripts', function () {
-    return browserify(sourceFile)
-        .bundle()
-        .pipe(plumber())
-        .pipe(source(destFileName))
-        //.pipe($.babel())
-        .pipe(gulp.dest('dist/scripts'));
-});
-
-// Bower helper
-gulp.task('bower', function () {
-    gulp.src('app/bower_components/**/*.js', {
-        base: 'app/bower_components'
-    })
-    .pipe(plumber())
-    .pipe(gulp.dest('dist/bower_components/'));
-
-});
+gulp.task('styles', ['css', 'sass']);
 
 // HTML
 gulp.task('html', function () {
@@ -116,7 +149,6 @@ gulp.task('images', function () {
         .pipe($.size());
 });
 
-
 // Fonts
 gulp.task('fonts', function () {
     return gulp.src(require('main-bower-files')({
@@ -126,35 +158,12 @@ gulp.task('fonts', function () {
         .pipe(gulp.dest('dist/fonts'));
 });
 
-// Clean
-gulp.task('clean', function (cb) {
-    $.cache.clearAll();
-    cb(del.sync(['dist/styles', 'dist/scripts', 'dist/images']));
-});
-
-
-// Bundle
-gulp.task('bundle', ['styles', 'scripts', 'bower'], function () {
-    return gulp.src('./app/*.html')
+// JSON
+gulp.task('json', function () {
+    return gulp.src(['app/scripts/json/**/*.json'])
         .pipe(plumber())
-        .pipe($.useref())
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('dist/scripts/'));
 });
-
-gulp.task('buildBundle', ['styles', 'buildScripts', 'bower'], function () {
-    return gulp.src('./app/*.html')
-        .pipe(plumber())
-        .pipe($.useref())
-        .pipe(gulp.dest('dist'));
-});
-
-//gulp.task('json', function () {
-//    gulp.src('app/scripts/json/**/*.json', {
-//        base: 'app/scripts'
-//    })
-//        .pipe(plumber())
-//        .pipe(gulp.dest('dist/scripts/'));
-//});
 
 // Robots.txt and favicon.ico
 gulp.task('extras', function () {
@@ -164,12 +173,44 @@ gulp.task('extras', function () {
         .pipe($.size());
 });
 
+
+/*************************************************************************/
+/*****************         Put things together           *****************/
+/*************************************************************************/
+
+// Clear cache, remove pre-bundle dist/ directories
+gulp.task('clean', function (cb) {
+    $.cache.clearAll();
+    cb(del.sync(['dist/styles', 'dist/scripts', 'dist/images', 'dist/conf']));
+});
+
+// [DEV] Insert CSS, JS and Bower components into the HTML
+gulp.task('bundle_dev', ['styles', 'scripts_dev', 'bower'], function () {
+    return gulp.src('./app/*.html')
+        .pipe(plumber())
+        .pipe($.useref())
+        .pipe(gulp.dest('dist'));
+});
+
+// Insert CSS, JS and Bower components into the HTML
+gulp.task('bundle', ['styles', 'scripts', 'bower'], function () {
+    return gulp.src('./app/*.html')
+        .pipe(plumber())
+        .pipe($.useref())
+        .pipe(gulp.dest('dist'));
+});
+
 // Syntax check with eslint
 gulp.task('lint', function () {
     return gulp.src('./app/scripts/**/*.js')
         .pipe(plumber())
         .pipe(react())
-        .pipe(eslint())   // attaches the lint output so it can be used by other modules
+        //.transform("babelify", {presets: ["es2015", "react"]})
+        .pipe(eslint({
+            baseConfig:{
+                parser: "babel-eslint"
+            }
+        }))   // attaches the lint output so it can be used by other modules
         .pipe(eslint.format())  // outputs the lint results to the console
         .pipe(eslint.failAfterError());
         //.pipe(jshint({ linter: 'jsxhint' }))
@@ -177,28 +218,20 @@ gulp.task('lint', function () {
 });
 
 
-/****************************************************
- * build - test - targz -> Our 'build' Jenkins task *
- ****************************************************/
+/*************************************************************
+ *************   The ones we really call on CLI  *************
+ * gulp build - gulp test - gulp targz -> Our build pipeline *
+ *************************************************************/
 
-
-// Build
-gulp.task('build', ['html', 'buildBundle', 'images', 'fonts', 'extras'], function () {
+// Put all sources (HTML+JS+CSS, images, favicon, etc.) to dist/,
+// then uglify the JS bundle, remove console logs, and move it to scripts/
+gulp.task('build', ['html', 'json', 'config', 'bundle', 'images', 'fonts', 'extras'], function () {
     gulp.src('dist/scripts/app.js')
         .pipe(plumber())
         .pipe(uglify())
         .pipe(stripDebug())
         .pipe(gulp.dest('dist/scripts'));
 });
-
-// Testing
-gulp.task('test', function(done) {
-    /* .... require a kind of gulp-mocha plugin */
-});
-gulp.task('tdd', ['test'], function(done) {
-    gulp.watch([ "app/scripts/**/*.js" ], [ 'test' ]);
-});
-
 
 // Archive elements to distribute
 gulp.task('targz', function () {
@@ -209,15 +242,25 @@ gulp.task('targz', function () {
         .pipe(gulp.dest('build'));
 });
 
+// Testing
+gulp.task('test', function(done) {
+    /* .... require a kind of gulp-mocha plugin */
+});
+gulp.task('tdd', ['test'], function(done) {
+    gulp.watch([ "app/scripts/**/*.js" ], [ 'test' ]);
+});
+
+// Default task, for when one runs only 'gulp' from CLI
+gulp.task('default', ['clean', 'build', 'targz']);
 
 
 /***********************************************
  * Watch: tasks auto-rerunning on file changes *
  ***********************************************/
 
-
-// Serve the app locally - for development - on localhost:3000 - reload on changes
-gulp.task('watch', ['html', 'fonts', 'bundle'], function () {
+// [DEV] Serve the app locally - for development - on localhost:3000
+// (reload on changes with bundle_dev task)
+gulp.task('watch', ['html', 'json', 'config', 'bundle_dev', 'images', 'fonts', 'extras'], function () {
     browserSync({
         notify: false,
         logPrefix: 'BS',
@@ -228,9 +271,10 @@ gulp.task('watch', ['html', 'fonts', 'bundle'], function () {
         server: ['dist', 'app']
     });
 // Watch js files
-    gulp.watch('app/scripts/**/*.js', ['lint']);
+    gulp.watch(['app/scripts/**/*.js', 'app/conf/*.js'], ['lint']);
 // Watch json files
-    //gulp.watch('app/scripts/**/*.json', ['json']);
+    gulp.watch('app/scripts/**/*.json', ['json']);
+    //gulp.watch('app/conf/*.json', ['json']);
 // Watch html files
     gulp.watch('app/*.html', ['html']);
 // Watch css files
@@ -240,5 +284,3 @@ gulp.task('watch', ['html', 'fonts', 'bundle'], function () {
 });
 
 
-// Default task
-gulp.task('default', ['clean', 'build', 'targz']);

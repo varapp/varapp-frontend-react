@@ -1,10 +1,9 @@
+/*
+ * Configuration
+ * REST calls to backend will use 'BACKEND_URL'.
+ */
 
-var CONFIG = {
-    // REST calls to backend will use 'http://${BACKEND_HOST}/${BACKEND_PATH}'.
-    // If USE_HTTPS is true, REST calls will use 'https://' instead of 'http://'
-    USE_HTTPS: true,
-    BACKEND_HOST: window.location.hostname,
-    BACKEND_PATH: '/backend',
+window.CONFIG = {
+    //"BACKEND_URL": 'https://' + window.location.hostname + "/backend",
+    BACKEND_URL: 'http://localhost:8000/varapp',
 }
-
-module.exports = CONFIG;

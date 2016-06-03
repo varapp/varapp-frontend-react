@@ -145,7 +145,7 @@ var GenotypesLookup = React.createClass({
         if (genotype) {  // TODO: Had to do that in case of too many queries and it becomes undefined
             var genmap = {'00': '0', '01': '1', '10': '2', '11': '3'};
             return genmap[genotype];
-        }
+        } else {return;}
     },
     /* If only one family, return 'M' if the sample is the mother
        of some other selected samples, and 'F' if it is the father. */

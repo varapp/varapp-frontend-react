@@ -17,7 +17,6 @@ var Confirm = require('../utils/Confirm');
 var ReactBootstrap = require('react-bootstrap');
 var ButtonGroup = ReactBootstrap.ButtonGroup;
 var Button = ReactBootstrap.Button;
-var Input = ReactBootstrap.FormControl;
 var Panel = ReactBootstrap.Panel;
 var Popover = ReactBootstrap.Popover;
 var OverlayTrigger = ReactBootstrap.OverlayTrigger;

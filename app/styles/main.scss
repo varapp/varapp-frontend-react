@@ -130,7 +130,13 @@ body {
 }
 
 #footer {
+    position: fixed;
+    bottom: 0;
+    left: $STANDARD_MARGIN;
+    width: calc(100% - 2* #{$STANDARD_MARGIN});
     height: 60px;
+    background: white;
+    z-index: 99;
     margin-top: 10px;
     color: #777;
     border-top: 1px solid #e5e5e5;
