@@ -4,13 +4,13 @@ backup/
 .sass-cache/
 .idea
 varapp-browser-ng.iml
-dist
 
 *.DS_Store
 
 app/bower_components
 
 build
+dist
 
 npm-debug.log
 
