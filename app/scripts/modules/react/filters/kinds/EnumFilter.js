@@ -144,7 +144,7 @@ class Choices extends React.Component {
         super(props);
     }
     render() {
-        var {name, selected, globalStats, stats, field, checkAll, ...others} = this.props;
+        var {name, selected, globalStats, stats, field, checkAll} = this.props;
         var desc_category = 'filters';
         var desc_key = field;
 
@@ -218,13 +218,16 @@ class ImpactChoices extends React.Component {
 
     render() {
         var _this = this;
-        var {name, selected, globalStats, ...others} = this.props;
+        var {selected, globalStats, ...others} = this.props;
         var pairs = globalStats.pairs;
-        var choices = _.map(['HIGH','MED','LOW'], function(severity) {
-            var sel = _.pick(selected, pairs[severity]);
-            var global = _.pick(globalStats, pairs[severity]);
-            var color = _this.colors[severity];
-            return <Choices key={severity} name={severity} selected={sel} globalStats={global} color={color} {...others} />;
+        var choices = _.map(['HIGH','MED','LOW'], function(impact_severity) {
+            var impact_pairs = _.sortBy(pairs[impact_severity]);
+            var sel = _.pick(selected, impact_pairs);
+            var global = _.pick(globalStats, impact_pairs);
+            var color = _this.colors[impact_severity];
+            return <Choices key={impact_severity} {...others} name={impact_severity}
+                            selected={sel} globalStats={global} color={color} />;
+            // 'name' is overwritten
         });
         return <div>{choices}</div>;
     }
@@ -240,7 +243,7 @@ class ChoicesList extends React.Component {
         super(props);
     }
     render() {
-        var {options, field, stats, globalStats, selected, checkOne, color, ...others} = this.props;
+        var {options, field, stats, selected, checkOne, color} = this.props;
         // The list of possible values for that field, reordered by sort_enum
         var enum_values = sort_enum(options, ENUMS[field]);
         var choices = _.chain(enum_values)

@@ -152,6 +152,16 @@ class SamplesStore extends BaseStore {
         this.emitChange();
     }
 
+    /* Make active all already active samples with the given *phenotype* */
+    updatePhenotypeActive(phenotype) {
+        var _this = this;
+        var samples = this._samplesCollection.getSamples();
+        _.forEach(samples, function(sample) {
+            _this._samplesCollection.setActive(sample.name, sample.active && sample.group === phenotype);
+        });
+        this.emitChange();
+    }
+
     /* Make all the family active/inactive */
     updateFamilyActive(family_id) {
         var _this = this;
@@ -248,20 +258,26 @@ class SamplesStore extends BaseStore {
 
             case SamplesConstants.ACTION_UPDATE_SAMPLE_GROUP:
                 console.log("SamplesStore :: ACTION_UPDATE_SAMPLE_GROUP");
-                this.updateSampleGroup(payload.sample_name, payload.group);
                 this._samplesChanged = true;
+                this.updateSampleGroup(payload.sample_name, payload.group);
                 break;
 
             case SamplesConstants.ACTION_UPDATE_SAMPLE_ACTIVE:
                 console.log("SamplesStore :: ACTION_UPDATE_SAMPLE_ACTIVE");
-                this.updateSampleActive(payload.sample_name);
                 this._samplesChanged = true;
+                this.updateSampleActive(payload.sample_name);
+                break;
+
+            case SamplesConstants.ACTION_UPDATE_PHENOTYPE_ACTIVE:
+                console.log("SamplesStore :: ACTION_UPDATE_PHENOTYPE_ACTIVE");
+                this._samplesChanged = true;
+                this.updatePhenotypeActive(payload.phenotype);
                 break;
 
             case SamplesConstants.ACTION_UPDATE_FAMILY_ACTIVE:
                 console.log("SamplesStore :: ACTION_UPDATE_FAMILY_ACTIVE");
-                this.updateFamilyActive(payload.family_id);
                 this._samplesChanged = true;
+                this.updateFamilyActive(payload.family_id);
                 break;
 
             case SamplesConstants.ACTION_UPDATE_ALL_ACTIVE:

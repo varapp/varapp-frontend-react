@@ -69,6 +69,14 @@ var Bookmarks = React.createClass({
     },
 
     setBookmark: function(is_bookmark, text) {
+        /* Prevent users of the demo version to create a million bookmarks */
+        var isDemo = window.location.hostname === "varapp-demo.vital-it.ch";
+        //var isDemo = window.location.hostname === "varapp-dev.vital-it.ch"; // test dev
+        //var isDemo = window.location.hostname === "localhost";  // test local
+        if (isDemo && this.state.bookmarks.length >= 10) {
+            toastr.warning("This demo version does not allow to create more than 10 bookmarks. Remove some first.");
+            return;
+        }
         var query = JSON.stringify(Api.buildQueryDict());
         var timeMillis = Date.now();
         //var timestamp = new Date(timeMillis).toLocaleString();

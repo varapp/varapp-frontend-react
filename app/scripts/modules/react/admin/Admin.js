@@ -16,7 +16,6 @@ var DropdownButton = ReactBootstrap.DropdownButton;
 var MenuItem = ReactBootstrap.MenuItem;
 
 
-
 var AdminPanel = React.createClass({
     getInitialState: function() {
         var users = AdminStore.getUsers();
@@ -188,11 +187,12 @@ var AdminPanel = React.createClass({
         };
 
         return (
-            <div className='row'>
-            <div className='admin-users-panel col-lg-8'>
+            <div>
+            <div className='admin-users-panel col-lg-8 table-responsive'>
                 <h3>Users</h3>
                 <Button onClick={this.selectUser.bind(null,null)}>Clear selection</Button>
-                <table className='table table-hover table-responsive'>
+                <div className='table-container'>
+                <table className='table table-hover'>
                     <thead><tr>
                         <th>User name</th>
                         <th>First name</th>
@@ -205,11 +205,13 @@ var AdminPanel = React.createClass({
                     <tbody>
                     {users}
                 </tbody></table>
+                </div>
             </div>
-            <div className='admin-dbs-panel col-lg-4'>
+            <div className='admin-dbs-panel col-lg-4 table-responsive'>
                 <h3>Databases {selectedUser ? 'of user '+ selectedUser.username : ''}</h3>
                 {MenuDbs()}
-                <table className='table table-hover table-responsive'>
+                <div className='table-container'>
+                <table className='table table-hover'>
                     <thead><tr>
                         <th>Name</th>
                         <th>Description</th>
@@ -218,6 +220,7 @@ var AdminPanel = React.createClass({
                     <tbody>
                     {visibleDbs}
                 </tbody></table>
+                </div>
             </div>
             </div>
         );

@@ -13,6 +13,7 @@ var mirrored = keyMirror({
     ACTION_BOOKMARKS_CHANGED: null,
     ACTION_FETCH_BOOKMARKS: null,
     ACTION_EXPORT_VARIANTS: null,
+    ACTION_VIEW_IN_IGV: null,
 
     ACTION_SEND_STATS: null,
     ACTION_SELECT_VARIANT: null,

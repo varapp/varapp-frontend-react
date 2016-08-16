@@ -48,6 +48,15 @@ RestService.prototype.getGlobalStats = function(db) {
 };
 
 /*********************/
+/*****  Location  *****/
+/*********************/
+
+RestService.prototype.getLocation = function(db, val) {
+    var locationUrl = '/'+db+'/location/' + val;
+    return RestClient.get(locationUrl);
+};
+
+/*********************/
 /*****  Lookup  ******/
 /*********************/
 
@@ -87,6 +96,14 @@ RestService.prototype.attributeDb = function(username, code, dbname, add) {
 };
 RestService.prototype.changeAttribute = function(username, code, attribute, new_value) {
     return RestClient.post('/changeAttribute', {username, code, attribute, new_value});
+};
+
+/*********************/
+/*****  Tasks  *******/
+/*********************/
+
+RestService.prototype.pollStatsCache = function(job_id) {
+    return RestClient.post('/poll_stats_cache', {job: job_id});
 };
 
 /*********************/

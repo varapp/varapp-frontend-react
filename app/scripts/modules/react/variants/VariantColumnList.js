@@ -378,6 +378,18 @@ var COLUMN_DEF = {
         cellRenderer: formatters.formatImpact,
         type: TYPES.IMPACT
     },
+    impact_severity: {
+        key: "impact_severity",
+        order: 203,
+        label: "Impact severity",
+        width: 80,
+        minWidth: 120,
+        flexGrow: 1,
+        dataKey: "impact_severity",
+        align: "center",
+        cellRenderer: formatters.formatImpact,
+        type: TYPES.IMPACT
+    },
 
 
 /** FREQUENCY **/
@@ -424,7 +436,7 @@ var COLUMN_DEF = {
         minWidth: FREQ_WIDTH,
         flexGrow: 1,
         dataKey: "aaf_max_all",
-        cellRenderer: formatters.formatScientific,
+        cellRenderer: formatters.formatFrequency,
         type: TYPES.FREQUENCY
     },
     allele_freq: {

@@ -15,16 +15,20 @@
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-    <!-- gulp-useref build blocks: -->
+    <!-- (gulp-useref build blocks) -->
 
     <!-- build:css styles/vendor.css -->
-    <!--<link rel="stylesheet" href="styles/react-select.css">-->   <!-- Dropdown selection module -->
     <link rel="stylesheet" href="styles/fixed-data-table-base.css">
     <link rel="stylesheet" href="styles/fixed-data-table-style.css">
-    <link rel="stylesheet" href="styles/toastr.css"/>  <!-- Warning/error windows module -->
+    <link rel="stylesheet" href="styles/toastr.css">  <!-- Warning/error windows module -->
     <link rel="stylesheet" href="styles/varapp-font.css">  <!-- Custom genotypes sprites -->
+    <link rel="stylesheet" type="text/css" href="bower_components/jquery-ui/themes/smoothness/jquery-ui.css">  <!-- For IGV.js -->
+    <link rel="stylesheet" type="text/css" href="bower_components/components-font-awesome/css/font-awesome.min.css">  <!-- For IGV.js -->
+    <link rel="stylesheet" type="text/css" href="styles/igv-1.0.1.css">  <!-- For IGV.js -->
     <!-- endbuild -->
+
     <link rel="stylesheet" href="styles/main.css">  <!-- Result of gulp compiling all css/scss files -->
+    <!--<link rel="stylesheet" href="styles/bundle.css">-->
 
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="bower_components/modernizr/modernizr.js"></script>
@@ -37,6 +41,10 @@
 <div class='container-fluid'>
     <div id="app-container"></div>
     <div id="footer">
+    <span class='footer-text footer-left'>
+        v1.0.1
+    </span>
+    <span class='footer-text footer-left'>|</span>
     <span class='footer-text footer-left'>Powered by
        <a class='external-link' href='http://gemini.readthedocs.org'>Gemini</a> -
        <a class='external-link' href='https://facebook.github.io/react/'>React</a>
@@ -49,7 +57,7 @@
     <span class='footer-text footer-left'>
         <a id='github-link' href="https://github.com/varapp" target="_blank">Github</a>
     </span>
-    <span class='footer-text pull-right'>
+    <span class='footer-text footer-right pull-right'>
        <a id='contact-link' target="_top"
           href="mailto:julien.delafontaine@isb-sib.ch?Subject=Varapp contact-info-help"
        >Contact</a>
@@ -59,11 +67,11 @@
 
 
 <!-- build:js scripts/vendor.js -->
-<script src="bower_components/jquery/dist/jquery.js"></script>
-<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <!-- bower:js -->
-
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script async src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 <!-- endbower -->
+<script async type="text/javascript" src="igv/igv-1.0.1.js"></script>
 <!-- endbuild -->
 
 <script src="conf/conf.js"></script>

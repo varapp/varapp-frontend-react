@@ -3,12 +3,12 @@ var React = require('react');
 var PureRenderMixin = require('react-addons-pure-render-mixin');
 
 /* Components */
-var FilterGroup = require('./FilterGroup');
 var TrueFalseAnyFilter = require('./kinds/TrueFalseAnyFilter');
 var ContinuousValueFilter = require('./kinds/ContinuousValueFilter');
 var EnumFilter = require('./kinds/EnumFilter');
 var LocationFilter = require('./kinds/LocationFilter');
 var GenotypesFilter = require('./kinds/GenotypesFilter');
+var FilterSummary = require('./FilterSummary');
 
 /* Actions */
 var FilterActions = require('../../actions/FilterActions');
@@ -29,22 +29,13 @@ var Api = require('../../utils/Api');
 var ReactBootstrap = require('react-bootstrap');
 var Button = ReactBootstrap.Button;
 var Panel = ReactBootstrap.Panel;
+var Accordion = ReactBootstrap.Accordion;
 
 
 /**
  * @class Filters
- * @description applied filter collection
- *
- *  Build the list of filters in a filter collection, have them fire back there change
+ * @description Build the list of filters in a filter collection, have them fire back there change
  *  to build a global filtering request.
- *
- * @example
- * React.createElement(
- *     <div>
- *         <EnumFilter/>
- *         <ContinuousValueFilter/>
- *     </div>
- * );
  */
 
 var filterClass = {};
@@ -62,6 +53,7 @@ var Filters = React.createClass({
             filterByGroup: FilterStore.getFilterCollection().byGroup(),  // a list of filter groups: [{name:, filters:}, ...]
             count: FilterStore.getFilterCollection().getCounts(),
             globalStats: FilterStore.getGlobalStats(),
+            openPanel: 0,
         };
     },
 
@@ -121,12 +113,18 @@ var Filters = React.createClass({
                 });
                 return e;
             });
-            return <FilterGroup
-                group={group}
-                key={'group-filter-' + group.name}
-                filters={filters}
-                isOpen={i === 0}
-            />;
+
+            var panelHeading = <div className={'filter-group-heading-'+group.name}
+                                    style={{height: '100%', width: '100%'}}>
+                    <span className={'panel-toggle-prefix'} />
+                    <span><strong>{group.name}</strong></span>
+                </div>;
+            var panelFooter = <FilterSummary filters={group.filters}/>;
+
+            return <Panel className={'filter-group filter-group-'+group.name} header={panelHeading} eventKey={i} key={i}
+                          footer={panelFooter} defaultExpanded={i === 0}>
+                    {filters}
+                </Panel>;
         });
 
         function nVariants() {
@@ -144,7 +142,7 @@ var Filters = React.createClass({
                 total = total === undefined ? '...' : <span id='n-total'>{total}</span>;
                 content = <span>{filtered} / {total}</span>;
             }
-            return <span># Variants: {content}</span>;
+            return <span style={{overflow: "hidden", whiteSpace: "nowrap"}}># Variants: {content}</span>;
         }
 
         return (
@@ -158,8 +156,8 @@ var Filters = React.createClass({
                     </Button>
                 </div>
                 {/* Location search box */}
-                <div id='location-search'> {/*className='panel panel-default filter-group'>*/}
-                    <div> {/*className='panel-heading'>*/}
+                <div id='location-search'>
+                    <div>
                         <LocationFilter
                             key='location-search'
                             idxFilter={1000}
@@ -171,12 +169,18 @@ var Filters = React.createClass({
                     </div>
                 </div>
                 {/* Grouped filters */}
-                <div className="panel-group" id="filter-group-accordion" role="tablist" aria-multiselectable={true}>
+                <div className="panel-group" id="filter-group-accordion">
+                    {/* Loading gif */}
                     {!isReady ?
                         <Panel bsStyle='default' className='loading-gif' id='loading-stats'>
                             Loading ...
                         </Panel> : ''}
-                    {groupElements}
+
+                    {/* Collapsible panels */}
+                    <Accordion defaultActiveKey={0}>
+                        {groupElements}
+                    </Accordion>
+
                 </div>
             </div>
         );

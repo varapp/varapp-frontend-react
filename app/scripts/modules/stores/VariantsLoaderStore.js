@@ -42,6 +42,7 @@ class VariantsLoaderStore extends BaseStore {
             case SamplesConstants.ACTION_UPDATE_SAMPLE_ACTIVE:
             case SamplesConstants.ACTION_UPDATE_FAMILY_ACTIVE:
             case SamplesConstants.ACTION_UPDATE_ALL_ACTIVE:
+            case SamplesConstants.ACTION_UPDATE_PHENOTYPE_ACTIVE:
                 this.changed.samples = true;
                 this.emitChange();
                 break;

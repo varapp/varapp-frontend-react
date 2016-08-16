@@ -1,15 +1,37 @@
 
 #admin-panel {
-    .admin-users-panel, .admin-dbs-panel {
-        display: table;
-    }
-    table  {
-        table-layout: fixed;
-        max-width: 100%;
-        td {
-            background: white;
-            max-width: 100%;
-            text-overflow: ellipsis;
+    height: calc(100% - 65px);  /* minus footer */
+    /*background: yellow;*/
+    overflow: visible;
+
+    & > div {
+        height: calc(100% - 40px); /* minus footer */
+        margin-bottom: 5px;
+        /*background: green;*/
+
+        .admin-users-panel, .admin-dbs-panel {
+            max-height: 100%;
+
+            div.table-container {
+                display: table;
+                overflow-y: auto;
+            }
         }
+
     }
 }
+
+
+table  {
+    width: 100%;
+    max-height: 400px;
+
+    tbody {
+    }
+    td {
+        background: white;
+        max-width: 100%;
+        text-overflow: ellipsis;
+    }
+}
+

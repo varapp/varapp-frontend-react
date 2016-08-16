@@ -133,6 +133,13 @@ var VariantActions = {
             sortDirection: sortDirection,
         });
     },
+    viewInIgv: function(variant) {
+        dispatcher.dispatch({
+            actionType: VariantConstants.ACTION_VIEW_IN_IGV,
+            variant: variant,
+        });
+
+    },
 };
 
 module.exports = VariantActions;

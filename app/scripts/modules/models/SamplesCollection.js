@@ -4,10 +4,11 @@ var _ = require('lodash');
 /**
  * Samples come from the backend, and have the following properties:
  * - name
- * - group : 'affected/not_affected'
+ * - group : 'affected'/'not_affected'
  * - family_id
  * - mother_id
  * - father_id
+ * - bam : the key to the BAM file in bam-server
  * - active : whether it is used for filtering genotypes / checked in the interface
  * - visible : appears in the table (can be active or not), use for filtering
  **/

@@ -101,8 +101,8 @@ var GeneLookup = React.createClass({
               <thead></thead>
               <tbody>
                   <tr><td>Symbol:</td><td className='lookup'>{v}</td></tr>
-                  <tr><td>Ensembl:</td><td className='lookup'>{formatters.refLink(ensembl_id, UtilsConstants.ENSEMBL_LINK)}</td></tr>
-                  <tr><td>Entrez:</td><td className='lookup'>{formatters.refLink(entrez_id, UtilsConstants.ENTREZ_LINK)}</td></tr>
+                  <tr><td>Ensembl:</td><td className='lookup'>{formatters.refLink(ensembl_id, UtilsConstants.ENSEMBL_LINK, ensembl_id)}</td></tr>
+                  <tr><td>Entrez:</td><td className='lookup'>{formatters.refLink(entrez_id, UtilsConstants.ENTREZ_LINK, entrez_id)}</td></tr>
                   <tr><td>OMIM:</td><td className='lookup'>{formatters.refLink(v, UtilsConstants.OMIM_LINK, 'Search...')}</td></tr>
               </tbody>
           </Table>;
@@ -185,7 +185,7 @@ var GenotypesLookup = React.createClass({
                     <td className='lookup lookup-parents text-center'>{parents ? parents : parentKind}</td>
                 </tr>;
             } else {
-                return '';
+                return <tr key={i}></tr>;
             }
         });
         return <Table condensed>

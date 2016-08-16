@@ -7,6 +7,7 @@
 @import "varapp-lookup.scss";
 @import "varapp-login.scss";
 @import "varapp-admin.scss";
+@import "varapp-igv.scss";
 
 
 /*
@@ -40,7 +41,26 @@
         text-decoration: none;
         color: black;
     }
+    a:hover {
+        text-decoration: none;
+        color: black;
+    }
 }
+
+.flex-container {
+    display: flex;
+    align-items: stretch;
+}
+.flex-horizontal {
+    flex-flow: row;
+}
+.flex-vertical {
+    flex-flow: column;
+}
+.flex {
+    flex: 1;
+}
+
 
 /****************************************************************************
  **************************     MAIN STRUCTURE     **************************
@@ -136,17 +156,20 @@ body {
     width: calc(100% - 2* #{$STANDARD_MARGIN});
     height: 60px;
     background: white;
-    z-index: 99;
+    z-index: 999;
     margin-top: 10px;
     color: #777;
     border-top: 1px solid #e5e5e5;
     /*border-bottom: 1px solid #e5e5e5;*/
     .footer-text {
         padding-top: 19px;
+    }
+    .footer-right {
         padding-right: 15px;
     }
     .footer-left {
         float: left;
+        padding-left: 15px;
     }
 }
 
@@ -179,7 +202,7 @@ body {
 /* Position the gif that shows up when data is loading */
 #is-loading {
     position: fixed;
-    bottom: 0px;
+    bottom: 0;
     left: 20px;
 }
 
@@ -188,6 +211,7 @@ body {
     position: absolute;
     top: -6px;
     right: 10px;
+    z-index: 900;
     a {
         color: black;
         &:hover {
@@ -280,21 +304,22 @@ div.loading-message.loading-message-lg {
 
 /* BS's Panel default bottom margin is 20, a bit too much */
 .panel {
-    margin-bottom: $STANDARD_MARGIN;
+    margin-bottom: 15px;
 }
 
 
 /************ MODAL *****************/
 /* Position the modal (e.g. Confirm window) where is it easily reachable */
 
-.modal, .modal-dialog {
+.confirm-modal.modal,
+.confirm-modal .modal-dialog {
     top: 30%;
 }
-.modal-dialog {
+.confirm-modal .modal-dialog {
     width: 25%;
 }
 .confirm-ok-button,
-.confirm-cancel-button, {
+.confirm-cancel-button {
     margin-right: 5px;
     width: 90px;
 }
@@ -305,7 +330,7 @@ div.loading-message.loading-message-lg {
 #export-to-button,
 #select-columns-button,
 .confirm-ok-button,
-.confirm-cancel-button, {
+.confirm-cancel-button {
     margin-right: 5px;
 }
 

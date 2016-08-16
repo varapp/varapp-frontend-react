@@ -42,6 +42,7 @@ class FilterStore extends BaseStore {
         this.init(null, null);
         this._globalStats = null;
         this._isReady = false;
+        this._locationChanged = false;
         this.subscribe(() => this._registerToActions.bind(this));
     }
 
@@ -51,6 +52,7 @@ class FilterStore extends BaseStore {
     getFilter(field) { return _filterCollection.get(field); }
     getGlobalStats() { return this._globalStats; }
     filtersChanged() { return this._filtersChanged; }
+    locationChanged() { return this._locationChanged; }
     isReady() { return this._isReady; }
     getDb() { return this._db; }
 
@@ -179,6 +181,23 @@ class FilterStore extends BaseStore {
                 }
                 else if (payload.state === ApiConstants.ERROR) {
                     this._isReady = true;
+                    this.emitChange();
+                }
+                break;
+
+            case FilterConstants.ACTION_FIND_LOCATION:
+                if (payload.state === ApiConstants.PENDING) {
+                    //console.log("FilterStore :: ACTION_FIND_LOCATION (PENDING)");
+                    this._locationChanged = true;
+                    this.emitChange();
+                }
+                else if (payload.state === ApiConstants.SUCCESS) {
+                    console.log("FilterStore :: ACTION_FIND_LOCATION");
+                    this._locationChanged = false;
+                    this.emitChange();
+                }
+                else if (payload.state === ApiConstants.ERROR) {
+                    this._locationChanged = false;
                     this.emitChange();
                 }
                 break;

@@ -185,30 +185,20 @@ var CheckAllSamplesButton = React.createClass({
  * Filter only affected/not_affected
  **/
 var FilterAffectedButtons = React.createClass({
-    getInitialState: function () {
-        return {
-            filteredGroup: undefined,
-        };
-    },
-    filterAffected: function (group, e) {
-        if (this.state.filteredGroup === group) {
-            this.setState({filteredGroup: undefined});
-            SamplesActions.filterGroup(undefined);
-            $(e.currentTarget).blur();
-        } else {
-            this.setState({filteredGroup: group});
-            SamplesActions.filterGroup(group);
-        }
+    filterAffected: function (phenotype) {
+        SamplesActions.updatePhenotypeActive(phenotype);
     },
     render: function () {
         var summary = this.props.summary;
         return <ButtonGroup>
             <Button id='filter-not-affected-btn'
-                active={this.state.filteredGroup === 'not_affected'} onClick={this.filterAffected.bind(this, "not_affected")}>
+                onClick={this.filterAffected.bind(this, "not_affected")}
+            >
                 Not affected: <span id="n-not-affected" className="badge sample_group sample_group_not_affected">{summary.not_affected || '0'}</span>
             </Button>
             <Button id='filter-affected-btn'
-                active={this.state.filteredGroup === 'affected'} onClick={this.filterAffected.bind(this, "affected")}>
+                onClick={this.filterAffected.bind(this, "affected")}
+            >
                 Affected: <span id="n-affected" className="badge sample_group sample_group_affected">{summary.affected || '0'}</span>
             </Button>
         </ButtonGroup>;

@@ -92,12 +92,6 @@ var VariantsTable = React.createClass({
         $('#lineNr').html('row #'+ (rowIndex+1));
     },
 
-    /* Highlight looked-up variant */
-    _onRowClick: function(e, rowIndex, rowData) {
-        this.setState({
-            lookedUpVariant: rowData,
-        });
-    },
     _rowClassNameGetter: function(rowIndex) {
         if (this.state.lookedUpVariant && this.props.variants
             && this.props.variants[rowIndex].variant_id === this.state.lookedUpVariant.variant_id) {
@@ -105,10 +99,23 @@ var VariantsTable = React.createClass({
         }
     },
 
+    /* Highlight selected variant */
+    _onRowClick: function(e, rowIndex, rowData) {
+        this.setState({
+            lookedUpVariant: rowData,
+        });
+    },
+
+    /* View in IGV */
+    _onRowDoubleClick: function(e, rowIndex, rowData) {
+        VariantActions.viewInIgv(rowData);
+    },
+
     /* Trigger opening the Lookup panel with info on the variant */
     variantLookup: function(variant, field) {
         VariantActions.variantLookup(variant, field);
     },
+
 
     render: function() {
         var _this = this;
@@ -186,6 +193,7 @@ var VariantsTable = React.createClass({
                     onRowMouseEnter={this._onRowMouseEnter}
                     onScrollEnd={this._onScrollEnd}
                     onRowClick={this._onRowClick}
+                    onRowDoubleClick={this._onRowDoubleClick}
                     rowClassNameGetter={this._rowClassNameGetter}
                 >
                 {cols}

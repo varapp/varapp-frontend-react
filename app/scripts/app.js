@@ -78,6 +78,7 @@ var App = React.createClass({
         AppStore.addChangeListener(this._onAppChange);
         VariantsLoaderStore.addChangeListener(this._loadVariants);
         RouterStore.addChangeListener(this._onUrlChange);
+        //AppActions.initStatsCache();
         var path = this.props.location.pathname;
         /* If already logged before, reuse JWT to relog automatically on page reload */
         var jwt = localStorage.getItem('jwt');
@@ -223,6 +224,8 @@ var App = React.createClass({
         if (this.state.isLoggingIn) {
             content = <div></div>;
         /* Everything ok, load components */
+        } else if (AppStore.isLoadingStatsCache()) {
+            content = <div>Loading cache, please wait</div>;
         } else {
             content = this.props.children && React.cloneElement(this.props.children,
                 {

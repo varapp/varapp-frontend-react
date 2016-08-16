@@ -60,7 +60,7 @@ var SamplesSummary = React.createClass({
             <Link to='/samples'>
             <Panel className='link-hover link-panel summary-panel'>
                 <span>
-                    <span className="panel-title"><span className='down-right'></span>
+                    <span className="panel-title"><span className='down-right' />
                         <strong>Samples selection<i>{family ? ' ('+family+') ' : ''}</i>:</strong>
                     </span>
                     <span className='samples-summary'>

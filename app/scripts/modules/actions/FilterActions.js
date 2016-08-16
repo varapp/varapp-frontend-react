@@ -31,6 +31,30 @@ var FilterActions = {
             });
     },
 
+    findLocation: function(db, loc) {
+        dispatcher.dispatch({
+            actionType: FilterConstants.ACTION_FIND_LOCATION,
+            state: ApiConstants.PENDING,
+        });
+        return RestService.getLocation(db, loc)
+            .then(function(data) {
+                dispatcher.dispatch({
+                    actionType: FilterConstants.ACTION_FIND_LOCATION,
+                    state: ApiConstants.SUCCESS,
+                    globalStats: data,
+                });
+                return data;
+            })
+            .fail(function(err) {
+                dispatcher.dispatch({
+                    actionType: FilterConstants.ACTION_FIND_LOCATION,
+                    state: ApiConstants.ERROR,
+                    error: err,
+                });
+                return err;
+            });
+    },
+
     /* Sync */
 
     updateOneFilterValue: function(field, value){

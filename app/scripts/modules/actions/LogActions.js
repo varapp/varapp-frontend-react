@@ -10,5 +10,17 @@ var logActions = {
             error: error,
         });
     },
+    sendSuccess: function(msg) {
+        dispatcher.dispatch({
+            actionType: LogConstants.ACTION_SEND_SUCCESS,
+            msg: msg,
+        });
+    },
+    sendWarning: function(msg) {
+        dispatcher.dispatch({
+            actionType: LogConstants.ACTION_SEND_WARNING,
+            msg: msg,
+        });
+    },
 };
 module.exports = logActions;

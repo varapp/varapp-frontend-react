@@ -1,5 +1,4 @@
 'use strict';
-
 var BaseStore = require('./BaseStore');
 
 var VariantConstants = require('../constants/VariantConstants');

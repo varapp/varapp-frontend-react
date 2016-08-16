@@ -52,12 +52,43 @@ class LogStore extends BaseStore {
         this.emitChange();
     }
 
+    warning(msg) {
+        var date = new Date();
+        var timestamp = date.toTimeString().split(' ')[0];
+        this._content.push({
+            text: msg,
+            type: 'warning',
+            time: timestamp
+        });
+        this.emitChange();
+    }
+
+    success(msg) {
+        var date = new Date();
+        var timestamp = date.toTimeString().split(' ')[0];
+        this._content.push({
+            text: msg,
+            type: 'success',
+            time: timestamp
+        });
+        this.emitChange();
+    }
+
     _registerToActions(payload) {
         switch (payload.actionType) {
 
             case LogConstants.ACTION_SEND_ERROR:
                 this.error(payload.error);
                 break;
+
+            case LogConstants.ACTION_SEND_SUCCESS:
+                this.success(payload.msg);
+                break;
+
+            case LogConstants.ACTION_SEND_WARNING:
+                this.warning(payload.msg);
+                break;
+
 
             default:
                 return true;

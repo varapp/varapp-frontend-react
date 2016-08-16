@@ -46,10 +46,15 @@ class AppStore extends BaseStore {
         this._samplesReady = false;
         this._filtersReady = false;
         this._bookmarksReady = false;
+        /* Serve-side cache initialization */
+        this._stats_cache_ready = false;
+        this._isLoadingStatsCache = false;
     }
     getDb() { return this._db; }
     storesReady() { return this._storesReady; }
     isLoadingStores() { return this._isLoadingStores; }
+    statsCacheReady() { return this._stats_cache_ready; }
+    isLoadingStatsCache() { return this._isLoadingStatsCache; }
 
     /* Synchronize the stores: emit change only when all REST calls (except variants query) are finished */
     synchronizeStores() {
@@ -132,6 +137,15 @@ class AppStore extends BaseStore {
                 if (payload.state === ApiConstants.SUCCESS) {
                     this._bookmarksReady = true;
                     this.synchronizeStores();
+                } break;
+
+            /* Wait for background tasks to be ready on the server (cache etc.) */
+            case AppConstants.ACTION_INIT_STATS_CACHE:
+                if (payload.state === ApiConstants.SUCCESS) {
+                    this._isLoadingStatsCache = false;
+                    this._stats_cache_ready = true;
+                    console.debug("Stats cache ready");
+                    //this.emitChange();
                 } break;
 
             default:

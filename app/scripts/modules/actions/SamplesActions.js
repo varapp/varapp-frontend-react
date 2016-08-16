@@ -57,6 +57,12 @@ var samplesActions = {
             sample_name: sample_name,
         });
     },
+    updatePhenotypeActive: function(phenotype) {
+        dispatcher.dispatch({
+            actionType: SamplesConstants.ACTION_UPDATE_PHENOTYPE_ACTIVE,
+            phenotype: phenotype,
+        });
+    },
     updateFamilyActive: function(family_id) {
         dispatcher.dispatch({
             actionType: SamplesConstants.ACTION_UPDATE_FAMILY_ACTIVE,

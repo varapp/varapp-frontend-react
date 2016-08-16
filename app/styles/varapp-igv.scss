@@ -1,0 +1,36 @@
+
+@import "constants.scss";
+
+/****************************************************************************
+ *************************  CUSTOM IGV.JS STYLING  **************************
+ ****************************************************************************/
+
+#igv-window {
+    min-width: 500px;
+    padding: 0;
+    margin-top: $STANDARD_MARGIN;
+    /*margin-bottom: 80px;*/
+    border: 1px solid #ccc;
+
+    .close-icon {
+        right: -8px;
+        top: -9px;
+    }
+}
+
+/* Hide the chromosome view */
+canvas.igv-ideogram-canvas {
+    display: none;
+}
+
+.igv-ideogram-content-div {
+    /*height: 2px;*/
+}
+.igv-ideogram-gutter-shim {
+
+}
+
+.igv-modal {
+    min-width: 400px;
+    z-index: 1000;
+}

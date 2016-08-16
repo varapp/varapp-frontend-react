@@ -38,7 +38,7 @@ var Confirm = React.createClass({
     render: function() {
         var header = this.props.header ? <Modal.Title><span className='text-center'>
                                         {this.props.header}</span></Modal.Title> : <span></span>;
-        return <Modal show={true} onHide={this.abort}>
+        return <Modal className='confirm-modal' show={true} onHide={this.abort}>
             <Modal.Header closeButton>{header}</Modal.Header>
             <Modal.Body>
                 {this.props.body}

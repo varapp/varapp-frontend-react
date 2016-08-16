@@ -15,6 +15,7 @@ var VariantsTable = require('./VariantsTable.js');
 var ColumnsSelection = require('./ColumnsSelection');
 var Bookmarks = require('./Bookmarks');
 var ExportTo = require('./ExportTo');
+var IgvWindow = require('../igv/IgvWindow');
 
 /* Constants */
 var UtilsConstants = require('../../constants/UtilsConstants');
@@ -88,7 +89,7 @@ var Variants = React.createClass({
                     <ColumnsSelection selectedColumns={this.state.selectedColumns} />
                     <ExportTo selectedColumns={this.state.selectedColumns} isExporting={this.state.isExporting} />
                     <Bookmarks db={db} />
-                    <p id="lineNr" style={{'float':'right'}}></p>
+                    <p id="lineNr" style={{'float':'right'}} />
                 </div>
                 <VariantsTable
                     variants={this.state.variants}
@@ -96,6 +97,7 @@ var Variants = React.createClass({
                     isLoading={this.state.isLoading}
                     isLoadingNextRowBatch={this.state.isLoadingNextRowBatch}
                 />
+                <IgvWindow />
             </div>
         );
     },

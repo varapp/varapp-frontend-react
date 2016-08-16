@@ -5,8 +5,6 @@ var _ = require('lodash');
 var AuthenticatedComponent = require('../react/login/AuthenticatedComponent');
 var backendUrl = window.CONFIG.BACKEND_URL;
 
-console.debug("Backend URL:", backendUrl);
-
 /**
  * Stuff that happens in the background everytime an XHR request is used.
  **/
@@ -22,7 +20,7 @@ var DuplicateXHRKiller = function () {
 
     var categoryFromURL = function (url) {
         var category = url.replace(/\?.*/, '')  //remove arguments
-            .replace(backendUrl, '')        // remove the domain
+            .replace(backendUrl, '')            // remove the domain
             .replace(/^\/\w*\//, '')            // remove the db name
             .replace(/^\//, '');                // remove the first slash
         return category;

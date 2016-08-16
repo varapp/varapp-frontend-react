@@ -28,10 +28,14 @@ var Header = React.createClass({
                 <NavPills db={this.props.db} />
                 <span className='navbar-brand' style={{padding: '0px', 'marginRight': '15px'}}>
                     <div className='navbar-left header-brand-icon'>
-                        <img height='35' alt='SIB' src='images/sib_logo_medium.jpg'/>
+                        <a href='http://www.isb-sib.ch/' target='_blank'>
+                            <img height='35' alt='SIB' src='images/sib_logo_medium.jpg'/>
+                        </a>
                     </div>
                     <div className='navbar-left header-brand-icon'>
-                        <img height='35' alt='CHUV' src='images/CHUV_logo2.png'/>
+                        <a href='http://www.chuv.ch/' target='_blank'>
+                            <img height='35' alt='CHUV' src='images/CHUV_logo2.png'/>
+                        </a>
                     </div>
                 </span>
                 <LinkToVarapp style={{textDecoration: 'none'}}><h3 className="text-muted">
