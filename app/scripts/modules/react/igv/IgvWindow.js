@@ -25,8 +25,9 @@ function setOptions(location, bamUrls, trackNames) {
     var tracks = _.map(bamUrls, function(url, i) {
         var trackName = trackNames[i];
         return {
-            url: url,
-            indexURL: url + '.bai',
+            url: url.bam,
+            indexURL: url.bai,
+            format: 'bam',
             name: trackName,
             visibilityWindow: 100000,
             alignmentRowHeight: 6,
@@ -114,11 +115,15 @@ class IgvWindow extends React.Component {
             return;
         }
         if (bamSamples.length > 6) {
-            bamSamples = bamSamples.slice(6);
+            bamSamples = bamSamples.slice(0,6);
         }
         var urls = _.map(bamSamples, function(s) {
             if (s.bam) {
-                return bamServerUrl +'/downloadRange/'+ s.bam +'.bam';
+                var key = s.bam;
+                return {
+                    bam: bamServerUrl +'/downloadRange/'+ key,
+                    bai: bamServerUrl +'/download/index/'+ key,
+                };
             }
         });
         var trackNames = _.map(bamSamples, 'name');
