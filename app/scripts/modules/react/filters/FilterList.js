@@ -40,6 +40,12 @@ var filters = [
 
     {
         group: IMPACT_GROUP,
+        name: 'Type',
+        field: 'type',
+        type: FilterConstants.FILTER_TYPE_ONE_CHOICE
+    },
+    {
+        group: IMPACT_GROUP,
         name: 'Coding',
         field: 'is_coding',
         type: FilterConstants.FILTER_TYPE_TRUE_FALSE_ANY

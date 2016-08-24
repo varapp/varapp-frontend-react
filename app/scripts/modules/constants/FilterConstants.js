@@ -15,6 +15,7 @@ module.exports = keyMirror({
     FILTER_TYPE_ENUM: null,
     FILTER_TYPE_AUTOCOMPLETE: null,
     FILTER_TYPE_GENOTYPES: null,
+    FILTER_TYPE_ONE_CHOICE: null,
     COUNT_TOTAL: null,
     COUNT_FILTERED: null
 });

@@ -8,6 +8,7 @@ var ContinuousValueFilter = require('./kinds/ContinuousValueFilter');
 var EnumFilter = require('./kinds/EnumFilter');
 var LocationFilter = require('./kinds/LocationFilter');
 var GenotypesFilter = require('./kinds/GenotypesFilter');
+var OneChoiceFilter = require('./kinds/OneChoiceFilter');
 var FilterSummary = require('./FilterSummary');
 
 /* Actions */
@@ -42,6 +43,7 @@ var filterClass = {};
 filterClass[FilterConstants.FILTER_TYPE_CONTINUOUS] = ContinuousValueFilter;
 filterClass[FilterConstants.FILTER_TYPE_FREQUENCY] = ContinuousValueFilter;
 filterClass[FilterConstants.FILTER_TYPE_ENUM] = EnumFilter;
+filterClass[FilterConstants.FILTER_TYPE_ONE_CHOICE] = OneChoiceFilter;
 filterClass[FilterConstants.FILTER_TYPE_TRUE_FALSE_ANY] = TrueFalseAnyFilter;
 filterClass[FilterConstants.FILTER_TYPE_GENOTYPES] = GenotypesFilter;
 

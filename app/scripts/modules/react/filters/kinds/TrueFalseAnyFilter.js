@@ -24,8 +24,8 @@ class TrueFalseAnyFilter extends React.Component {
 
     onChange(e) {
         var convert = {
-            'true':true,
-            'false':false
+            'true': true,
+            'false': false
         };
         var value = convert[e.target.value];
         this.setState({value: value});  // change checked state right away

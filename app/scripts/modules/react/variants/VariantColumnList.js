@@ -356,7 +356,15 @@ var COLUMN_DEF = {
 
 /** IMPACT **/
 
-
+    type: {
+        key: 'type',
+        order: 200,
+        label: 'Type',
+        width: 100,
+        flexGrow: 1,
+        dataKey: 'type',
+        tyle: TYPES.IMPACT
+    },
     aa_change: {
         key: "aa_change",
         order: 201,
