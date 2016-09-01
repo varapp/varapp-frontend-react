@@ -39,7 +39,6 @@ const DESC = {
     "map_qual_rank_sum": "Z-score From Wilcoxon rank sum test for mapping qualities (quality of reads supporting REF vs. quality of reads supporting ALT).",
     "read_pos_rank_sum": "Z-score From Wilcoxon rank sum test for site position within reads (position within reads supporting REF vs. position within reads supporting ALT).",
     "strand_bias_odds_ratio": "Symmetric Odds Ratio of 2x2 contingency table to detect strand bias.",
-    "vqslod": "Variant Quality Score Recalibration (VQSR). Log odds ratio of being a true variant versus being false under the trained Gaussian mixture model.",
     "allele_count": "Total number of times this allele appears across all samples (VCF AC field).",
     "allele_freq": "Allele frequency across all samples (VCF AF field)."
 };

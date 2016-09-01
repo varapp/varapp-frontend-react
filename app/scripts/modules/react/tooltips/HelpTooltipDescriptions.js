@@ -5,9 +5,9 @@ var descriptions = {
     'variant_columns': DESC,
     'filters': {
         'quality': DESC.quality,
-        'pass_filter': DESC.filter,
+        'pass_filter': DESC.pass_filter,
         'qual_depth': DESC.qual_depth,
-        'fisher_strand_bias': DESC.strand_bias + ' The higher value, the more likely there is to be bias.',
+        'fisher_strand_bias': DESC.fisher_strand_bias + ' The higher value, the more likely there is to be bias.',
         'rms_map_qual': DESC.rms_map_qual,
         //'impact': 'Location of the mutation inside a gene, characterizing the impact on the protein.',
         //'impact_severity': 'Severity of the impact of the mutation on the protein.',
@@ -15,7 +15,7 @@ var descriptions = {
         'polyphen_pred': DESC.polyphen_pred,
         'sift_score': DESC.sift_pred + ' The lower, the more deleterious.',
         'polyphen_score': DESC.polyphen_pred + ' The higher, the more deleterious.',
-        'gerp_bp_score': DESC.gerp_db_score + ' Higher scores reflect greater conservation.',
+        'gerp_bp_score': DESC.gerp_bp_score + ' Higher scores reflect greater conservation.',
         'gerp_element_pval': DESC.gerp_element_pval + ' Lower P-values scores reflect greater conservation.',
         'cadd_raw': DESC.cadd_raw + ' Indels have no score and will not be filtered out.',
         'cadd_scaled': DESC.cadd_scaled + ' Indels have no score and will not be filtered out.',
@@ -31,11 +31,11 @@ var descriptions = {
         'aaf_max_all': DESC.aaf_max_all,
         'base_qual_rank_sum': DESC.base_qual_rank_sum +
             ' Near 0 is better (means "no difference").',
-        'map_qual_rank_sum': DESC.map_qual__rank_summ +
+        'map_qual_rank_sum': DESC.map_qual_rank_sum +
             ' Near 0 is better (means "no difference").',
         'read_pos_rank_sum': DESC.read_pos_rank_sum +
             ' Near 0 is better (means "no difference").',
-        'strand_bias_odds_ratio': DESC.sor + ' A high value is indicative of large bias.',
+        'strand_bias_odds_ratio': DESC.strand_bias_odds_ratio + ' A high value is indicative of large bias.',
     },
     'scenario': {
         'active': 'All variants that are present in at least one of the selected individuals.',
