@@ -5,7 +5,6 @@
  * when called from command-line as `gulp taskname`.
  * */
 var gulp = require('gulp');
-var del = require('del');                // To 'delete files/folders using globs'
 
 // Gulp plugins
 var $ = require('gulp-load-plugins')();  // Auto-requires gulp plugins. Use with e.g. '$.uglify' for gulp-uglify.
@@ -16,16 +15,19 @@ var react = require('gulp-react');       // To precompile JSX into Javascript
 var plumber = require('gulp-plumber');   // To catch errors automatically
 var uglify = require('gulp-uglify');     // JavaScript parser/compressor/beautifier
 var stripDebug = require('gulp-strip-debug');  // To remove console.log statements in prod build
+var minifyCSS = require('gulp-minify-css');
+var concat = require('gulp-concat');
 require('harmonize')();
 
+var del = require('del');                 // To 'delete files/folders using globs'
 var path = require('path');               // Path string manipulations
 var browserify = require('browserify');   // To bundle 'require' dependencies:
     // browserify recursively analyzes all the require() calls in the source files you give it
     // in order to build a bundle you can serve up to the browser in a single <script> tag."
     // Return a browserify instance.
-var watchify = require('watchify');       // To be able to watch changes in the code
+var watchify = require('watchify');           // To be able to watch changes in the code
 var source = require('vinyl-source-stream')   // "Use conventional text streams at the start of your gulp pipelines,
-var sourceFile = './app/scripts/app.js',      // for nicer interoperability with the existing npm stream ecosystem."
+var sourceFile = './app/scripts/app.js',      //  for nicer interoperability with the existing npm stream ecosystem."
     destFolder = './dist/scripts',
     destFileName = 'app.js';
 
@@ -54,6 +56,7 @@ function rebundle() {
         .pipe(source(destFileName))  // app.js bundle
         .pipe(gulp.dest(destFolder)) // dist/scripts/
         .on('end', function () {
+            console.log("rebundle :: reload");
             reload();
         });
 }
@@ -103,7 +106,10 @@ gulp.task('bower', function () {
 // Styles
 // Compile SASS
 gulp.task('sass', function () {
-    return gulp.src('app/styles/**/*.scss')
+    gulp.src('app/styles/img/*.svg')
+        .pipe(plumber())
+        .pipe(gulp.dest('dist/styles/img'));
+    return gulp.src(['app/styles/**/*.scss', 'app/styles/**/*.css'])
         .pipe(plumber())
         //.pipe($.changed('dist/styles', {extension: '.css'}))  // does not work well because of @import
         .pipe($.rubySass({
@@ -112,18 +118,12 @@ gulp.task('sass', function () {
             loadPath: ['app/bower_components']
         }))
         .pipe($.autoprefixer('last 1 version'))  // Automatically applies CSS prefixes such as webkit- moz- etc.
+        //.pipe(concat('bundle.css'))
+        .pipe(minifyCSS())
         .pipe(gulp.dest('dist/styles'))
         .pipe($.size());  // Log out the size of files in the stream
 });
-// CSS
-gulp.task('css', function() {
-    return gulp.src('app/styles/**/*.css')
-        .pipe(plumber())
-        .pipe($.autoprefixer('last 1 version'))
-        .pipe(gulp.dest('dist/styles'))
-        .pipe($.size());
-});
-gulp.task('styles', ['css', 'sass']);
+gulp.task('styles', ['sass']);
 
 // HTML
 gulp.task('html', function () {
@@ -152,8 +152,9 @@ gulp.task('images', function () {
 // Fonts
 gulp.task('fonts', function () {
     return gulp.src(require('main-bower-files')({
-        filter: '**/*.{eot,svg,ttf,woff,woff2}'
-    }).concat('app/fonts/**/*'))
+            filter: '**/*.{eot,svg,ttf,woff,woff2}'
+        })
+        .concat('app/fonts/**/*'))
         .pipe(plumber())
         .pipe(gulp.dest('dist/fonts'));
 });
@@ -181,7 +182,7 @@ gulp.task('extras', function () {
 // Clear cache, remove pre-bundle dist/ directories
 gulp.task('clean', function (cb) {
     $.cache.clearAll();
-    cb(del.sync(['dist/styles', 'dist/scripts', 'dist/images', 'dist/conf']));
+    del(['dist/*']).then(function() { cb(); });;
 });
 
 // [DEV] Insert CSS, JS and Bower components into the HTML
@@ -237,7 +238,7 @@ gulp.task('build', ['html', 'json', 'config', 'bundle', 'images', 'fonts', 'extr
 gulp.task('targz', function () {
     return gulp.src(['dist/**', '!dist/bower_components/**', '!dist/bower_components'])
         .pipe(plumber())
-        .pipe(tar('varapp-browser-react.tar'))
+        .pipe(tar('varapp-frontend-react.tar'))
         .pipe(gzip())
         .pipe(gulp.dest('build'));
 });
